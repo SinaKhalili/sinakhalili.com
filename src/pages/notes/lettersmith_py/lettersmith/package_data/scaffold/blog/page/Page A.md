@@ -1,1 +1,0 @@
-Example link to [[page B]].

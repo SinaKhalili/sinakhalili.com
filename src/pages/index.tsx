@@ -15,6 +15,9 @@ import { IndexCard } from "@/components/IndexCard";
 import { PrinterPrint } from "@/components/Printer";
 import { PopCitation } from "@/components/PopCitation";
 import Link from "next/link";
+import { projects } from "@/data/projects";
+import { RecentItem } from "@/components/RecentItem";
+import { CurrentlyReadingData } from "@/data/reading";
 
 export const getStaticProps = () => {
   const posts = getPosts(100); // Will add pagination after 100 posts
@@ -45,8 +48,7 @@ export default function Home({ posts }: HomeProps) {
               Khalili.
               <PopCitation>
                 Pronounced like the{" "}
-                <chakra.span fontWeight="bold">Sina</chakra.span> in
-                <chakra.span fontWeight="bold"> Sinatra</chakra.span> or John{" "}
+                <chakra.span fontWeight="bold"> Cena</chakra.span> in John{" "}
                 <chakra.span fontWeight="bold">Cena</chakra.span>, and the{" "}
                 <chakra.span fontWeight="bold">Khalili</chakra.span> in
                 <chakra.span fontWeight="bold"> Khalil</chakra.span> Gibran.
@@ -89,9 +91,49 @@ export default function Home({ posts }: HomeProps) {
         </Flex>
       </Box>
       <VStack>
-        <IndexCard title="BLOGPOSTS" bgURL="depth.jpg" />
-        <IndexCard title="READING" bgURL="flux.svg" />
-        <IndexCard title="PROJECTS" bgURL="grain.svg" />
+        <Heading>~ Recently ~</Heading>
+        <Flex flexWrap="wrap">
+          <Box
+            p={2}
+            m={2}
+            border="1px solid"
+            borderColor="gray.200"
+            borderRadius="md"
+          >
+            <Text>posts</Text>
+            {posts.map((post) => (
+              <PostItem key={post.slug} post={post} />
+            ))}
+          </Box>
+          <Box
+            p={2}
+            m={2}
+            border="1px solid"
+            borderColor="gray.200"
+            borderRadius="md"
+          >
+            <Text>reading</Text>
+            {CurrentlyReadingData.map((book) => (
+              <RecentItem key={book.title} title={book.title} link="/reading" />
+            ))}
+          </Box>
+          <Box
+            p={2}
+            m={2}
+            border="1px solid"
+            borderColor="gray.200"
+            borderRadius="md"
+          >
+            <Text>projects</Text>
+            {projects.map((project) => (
+              <RecentItem
+                key={project.name}
+                title={project.name}
+                link={project.repo}
+              />
+            ))}
+          </Box>
+        </Flex>
       </VStack>
     </Box>
   );
