@@ -1,0 +1,1 @@
+My idea of the opposite of an [infohazard](https://www.lesswrong.com/posts/Rut5wZ7qyHoj3dj4k/a-point-of-clarification-on-infohazard-terminology), these are ideas which can seriously benefit the person who knows it.

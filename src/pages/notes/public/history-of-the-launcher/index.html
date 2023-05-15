@@ -1,0 +1,100 @@
+<!DOCTYPE>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>History of the launcher | Mind excursions</title>
+  <meta name="title" content="History of the launcher">
+  <meta name="citation_title" content="History of the launcher">
+  <meta name="og:title" content="History of the launcher">
+  <meta name="creator" content="notes.sinakhalili.com">
+  <meta name="author" content="Sina Khalili">
+  <meta name="citation_author" content="Sina Khalili">
+  <link rel="index" title="Sina's notes" href="https://notes.sinakhalili.com">
+  <meta name="og:site" content="https://notes.sinakhalili.com">
+  <meta name="og:type" content="article">
+  <link rel="canonical" href="https://notes.sinakhalili.com/history-of-the-launcher/index.html">
+  <link rel="stylesheet" href="/static/styles/main.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/static/favicon/site.webmanifest">
+  <script>
+  var currentTheme = localStorage.getItem("theme");
+
+  if (currentTheme == "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+  </script>
+
+</head>
+<body>
+
+
+<div class="item">
+  <div class="jello-horizontal">
+    <picture>
+      <source class="shadow-pop-bl" srcset="/static/img/face-top-min.webp" type="image/webp">
+     <a href="/clicking-the-head-should-do-something">
+      <img class="shadow-pop-bl" src="/static/img/face-top-min.png" alt="picture of sin">
+     </a> 
+    </picture>
+  </div>
+    <h2>Sina’s PKM</h2>
+  <nav>
+      <a href="/"> 🏚 Home</a>
+      <a href="/how-to-use-this-site"> 🤔 How to use this site</a>
+      <a href="#" onclick="toggleTheme()">⚙️ Toggle dark mode</a>
+  </nav>
+  <input type="search" name="algolia_search" id="search" placeholder="🔎  Search...">
+
+</div>
+
+<div class="main">
+  <article>
+    <h1>History of the launcher</h1>
+    <div><p><em>[ <a href="http://localhost:8000/category---programming/" class="wikilink">Category - Programming</a> ][ <a href="http://localhost:8000/category---essays/" class="wikilink">Category - Essays</a> ]</em></p>
+<h2>A small review of the launcher</h2>
+<p>So Alfred is a category of software which is called a “launcher”, which is basically a search box like the windows start button, where you type in an application and it gets <em>launched</em>. Then people started baking more commands into the launcher.</p>
+<p><em>Dev 1: why search for the file explorer in the launcher and then search for a file? Why not just search for the file in the launcher?</em></p>
+<p><em>Dev 2: Doesn't the violate some unix principle?</em></p>
+<p><em>Dev 1: Uh... can you pretend that the launcher is an interface and I'm uh... piping the output of other programs into it and uh... on every keystroke I decide which program to pipe into it?</em></p>
+<p><em>Dev 2: Awesome! Very unix-y of you!</em></p>
+<p>And so the floodgates were open. Any computation could be run on a launcher, with a quick slap-on prefix. Want to calculate something? just prefix with <code>cal</code> want to run a terminal command? Just prefix with <code>&gt;</code>. Translate? Fuzzy search? Acronym? Emoji picker? Just add prefix!</p>
+<p>Far from its humble roots, the launcher became some people's main interface to the computer. In a way it is the ultimate synthesis of GUI and terminal. The dialectic, started from text-only dummy terminals of the mainframes of yore and refuted by the pure GUI abandonment/heretical view of anything programmer-y.</p>
+<p>The overloaded launcher is truly the pure middle of the two.</p>
+</div>
+  </article>
+</div>
+
+<div class="item right-bar">
+  <h2>Pages that link here:</h2>
+    
+        <p><a class="wikilink" href="/alfred/">alfred</a><br>This program is like an enhanced dmenu for Mac</p>
+    
+  <h3>Current <a href="/stats">progress</a>:</h3>
+  <p><span class="progress" id="progress">Loading...</span> articles read 🤓 </p>
+  <a href="" onclick="clearProgress()">clear progress? 🚨</button>
+</div>
+
+
+
+
+</body>
+<script src="/static/scripts/main.js"></script>
+<script src="/static/scripts/progress.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@algolia/algoliasearch-netlify-frontend@0/dist/algoliasearchNetlify.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@algolia/algoliasearch-netlify-frontend@0/dist/algoliasearchNetlify.js"></script>
+<script type="text/javascript">
+  algoliasearchNetlify({
+    appId: 'DHTACBTDRW',
+    apiKey: 'e5d561894c559b5fb414f30bfc24c5d6',
+    siteId: '0928febf-1302-4002-b548-306e74b39e9b',
+    branch: 'master',
+    autocomplete: {
+      inputSelector: 'input[type=search]',
+    },
+  });
+</script>
+</html>

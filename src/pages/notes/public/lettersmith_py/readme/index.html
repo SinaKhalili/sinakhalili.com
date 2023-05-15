@@ -1,0 +1,158 @@
+<!DOCTYPE>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>README | Mind excursions</title>
+  <meta name="title" content="README">
+  <meta name="citation_title" content="README">
+  <meta name="og:title" content="README">
+  <meta name="creator" content="notes.sinakhalili.com">
+  <meta name="author" content="Sina Khalili">
+  <meta name="citation_author" content="Sina Khalili">
+  <link rel="index" title="Sina's notes" href="https://notes.sinakhalili.com">
+  <meta name="og:site" content="https://notes.sinakhalili.com">
+  <meta name="og:type" content="article">
+  <link rel="canonical" href="https://notes.sinakhalili.com/lettersmith_py/readme/index.html">
+  <link rel="stylesheet" href="/static/styles/main.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/static/favicon/site.webmanifest">
+  <script>
+  var currentTheme = localStorage.getItem("theme");
+
+  if (currentTheme == "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+  </script>
+
+</head>
+<body>
+
+
+<div class="item">
+  <div class="jello-horizontal">
+    <picture>
+      <source class="shadow-pop-bl" srcset="/static/img/face-top-min.webp" type="image/webp">
+     <a href="/clicking-the-head-should-do-something">
+      <img class="shadow-pop-bl" src="/static/img/face-top-min.png" alt="picture of sin">
+     </a> 
+    </picture>
+  </div>
+    <h2>Sina’s PKM</h2>
+  <nav>
+      <a href="/"> 🏚 Home</a>
+      <a href="/how-to-use-this-site"> 🤔 How to use this site</a>
+      <a href="#" onclick="toggleTheme()">⚙️ Toggle dark mode</a>
+  </nav>
+  <input type="search" name="algolia_search" id="search" placeholder="🔎  Search...">
+
+</div>
+
+<div class="main">
+  <article>
+    <h1>README</h1>
+    <div><h1>Lettersmith</h1>
+<p>A set of tools for static site generation. It comes with a static site generator bundled in. You can also use it as a library to build your own custom static site generator.</p>
+<p>I built it for myself, because I found other solutions to be pretty baroque and difficult to customize. Right now, it's a simple set of fairly stable tools for personal use. I might package it up later.</p>
+<h2>Installing</h2>
+<p>Lettersmith requires Python 3.6+, and a version of pip compatible with Python 3.</p>
+<pre><code class="language-bash">git clone https://github.com/gordonbrander/lettersmith_py
+cd lettersmith_py
+pip3 install -e .
+</code></pre>
+<h2>lettersmith_scaffold</h2>
+<p>You can easily scaffold a site using <code>lettersmith_scaffold</code>.</p>
+<pre><code class="language-bash">lettersmith_scaffold ./blog --type blog
+</code></pre>
+<p>This will stub out a directory structure and a build script for a typical blogging setup. You can customize the build script from there.</p>
+<h2>What it does</h2>
+<p>Lettersmith comes bundled with a static site generator, but it's really just a library of tools for transforming text. You can use these tools to create your own custom static site generators, build tools, project scaffolders, ebook generators, or wikis — whatever you like.</p>
+<p>Lettersmith loads text files as Python namedtuples, so a markdown file like this:</p>
+<pre><code class="language-markdown">---
+title: &quot;My post&quot;
+created: 2018-01-17
+---
+
+Some content
+</code></pre>
+<p>Becomes this:</p>
+<pre><code class="language-python">Doc(
+  id_path='path/to/post.md',
+  output_path='path/to/post.md',
+  input_path='path/to/post.md',
+  created=datetime.datetime(2018, 1, 17, 0, 0),
+  modified=datetime.datetime(2018, 1, 17, 0, 0),
+  title='My post',
+  content='Some content',
+  meta={
+    &quot;title&quot;: &quot;My post&quot;,
+    &quot;date&quot;: &quot;2018-01-17&quot;
+  },
+  template=&quot;&quot;
+)
+</code></pre>
+<h2>Plugins</h2>
+<p>Plugins are just functions that transform doc namedtuples.</p>
+<p>To transform many files, you can load them into an iterable, then use list comprehensions, generator expressions, and map, filter, reduce:</p>
+<pre><code class="language-python"># Get all markdown docs under source/
+posts = docs.find(&quot;posts/*.md&quot;)
+# Transform them with your function.
+posts = my_plugin(posts)
+</code></pre>
+<p>To write a plugin, all you need to do is define a generator function that takes an iterator of docs and yields transformed docs.</p>
+<pre><code class="language-python">def my_plugin(docs)
+    for doc in docs:
+        yield do_something(doc)
+</code></pre>
+<p>You can pipe docs through many transforming functions using <code>pipe</code>.</p>
+<pre><code class="language-python">posts = pipe(
+  docs.find(&quot;source/*.md&quot;),
+  markdown.content,
+  my_plugin,
+  my_other_plugin
+)
+</code></pre>
+<p>Which is equivalent to:</p>
+<pre><code class="language-python">posts = my_other_plugin(my_plugin(markdown.content(docs.find(&quot;source/*.md&quot;))))
+</code></pre>
+<p>When you're done transforming things, you can pass the iterable to <code>write</code>, which takes care of writing out the files to an output directory.</p>
+<pre><code class="language-python">write(posts, directory=&quot;public&quot;)
+</code></pre>
+<p>That's it!</p>
+<p>Check out <a href="http://localhost:8000/lettersmith/package_data/scaffold/blog/build.py">blog/build.py</a> for an example of a build script that uses some of the built-in plugins to create a typical blogging setup.</p>
+<p>Lettersmith comes with a swiss army knife of helpful tools for things like Markdown, templates, drafts, tags, wikilinks, and more — and if you see something missing it's easy to write your own functions.</p>
+</div>
+  </article>
+</div>
+
+<div class="item right-bar">
+  <h2>Pages that link here:</h2>
+    
+  <h3>Current <a href="/stats">progress</a>:</h3>
+  <p><span class="progress" id="progress">Loading...</span> articles read 🤓 </p>
+  <a href="" onclick="clearProgress()">clear progress? 🚨</button>
+</div>
+
+
+
+
+</body>
+<script src="/static/scripts/main.js"></script>
+<script src="/static/scripts/progress.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@algolia/algoliasearch-netlify-frontend@0/dist/algoliasearchNetlify.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@algolia/algoliasearch-netlify-frontend@0/dist/algoliasearchNetlify.js"></script>
+<script type="text/javascript">
+  algoliasearchNetlify({
+    appId: 'DHTACBTDRW',
+    apiKey: 'e5d561894c559b5fb414f30bfc24c5d6',
+    siteId: '0928febf-1302-4002-b548-306e74b39e9b',
+    branch: 'master',
+    autocomplete: {
+      inputSelector: 'input[type=search]',
+    },
+  });
+</script>
+</html>

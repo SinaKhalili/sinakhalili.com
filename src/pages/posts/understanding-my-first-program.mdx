@@ -1,0 +1,236 @@
+---
+title: "Trying to understand how my first program worked"
+publishedOn: October 11, 2020
+---
+
+# Hello, bit sizes?
+
+I remember one of the assignments (in fact,
+literally the _first_ assignment at my university ever - we skipped
+"hello world" for some reason)
+was to print the bit sizes of various types. So, after much pain, we went ahead and
+wrote
+
+```C
+#include<stdio.h>
+int main() {
+  printf("An int is %d bits long \n", sizeof(int));
+  printf("And float is %d bits long \n", sizeof(float));
+  printf("And char is %d bits long \n", sizeof(char));
+}
+```
+
+and after learning the secret incantation of `gcc`, we got out
+
+```
+An int is 4 bits long
+And float is 4 bits long
+And  char is 1 bits long
+```
+
+Which, despite obviously not knowing the difference between bits and bytes,
+I think is a pretty impressive first program.
+
+Afterwards, we learnt about functions. And I even wrote my
+**own** function! Of course, since I am a prodigy of programming
+it took my no time to create this absolute beauty:
+
+```C
+#include<stdio.h>
+int coolFunction(int number) {
+  return number + 3;
+}
+int main(){
+  printf("%d\n", coolFunction(3));
+}
+```
+
+```
+6
+```
+
+Ah so that's pretty easy. I guess `printf` and `sizeof` are two
+other functions that some old guys with beards wrote.
+
+Something with that `main`
+function was also important. Well, here I am, totally
+on their level since I've also written _my_ function.
+
+It wasn't until an embarassingly long time later that I realized that **none** of those
+functions are like each other. After learning what they meant I almost felt like
+I had finally understood a koan, unveiling immediately a bunch of facts about
+programming in C which I never thought of.
+
+
+# Breaking it down 
+
+Let's start with the abomination which was my function.
+This is a standard function. Strict return type, strict input, strict computer science professors.
+If I wrote `coolFunction(4, "please");`, my compiler would throw error,
+my lower palm would make an impact with my forehead, and I'd start again.
+And, like, of course it would, there's an extra argument there.
+
+
+# stdARG matey! 
+
+Next, let's look at the `printf`. This is just some function defined in
+`stdio.h`, right? I guess the format string with it's %d's and %x and stuff must
+serve some purpose with memory allocation?
+
+Well actually, and I'm not sure how I didn't notice this
+despite using `printf` every single time I used C, that it can take a **variable** amount
+of arguments (i.e. it's a [Variadic function - Wikipedia](https://en.wikipedia.org/wiki/Variadic%5Ffunction))
+
+I mean, duh, of course it can. I've been putting a random amount of floats, ints,
+and chars all the time. Yet, for some reason, I decided "yep that's normal, and I
+will never try to create a function with variable parameters myself, because that
+is impossible and has never been done before. Now I will `printf` debug this code."
+
+So, despite nearly a full computer science degree, we never even heard of variadic arguments
+in C - even though we used them every time. Well, they're defined in the `stdarg.h`, and
+has a bit of syntax for declaring variadic functions, the dottybois (also known as the ellipse)
+
+```C
+#include<stdio.h>
+#include<stdarg.h>
+
+int coolFunction(int number,...) {
+  return number + 3;
+}
+int main(){
+  printf("%d\n", coolFunction(3, "please", "oh", "yeah", "wassup", 1337));
+}
+```
+
+```
+6
+```
+
+Thank you C, very cool! But what if we actually wanted to _access_ the variadic arguments?
+
+We call this macro called `va_start` provided in `stdarg` to begin iterating over the
+arguments. It takes a `va_list` type so we'll have to declare that as well. Finally we need
+to use the `va_arg` macro which expands the type that we give it. They're all
+polluting the namespace already from `stdarg` already so no skin off our back
+
+```C
+#include<stdio.h>
+#include<stdarg.h>
+
+int coolFunction(int number,...) {
+  int count = 3;
+  va_list args;
+  va_start(args, count);
+
+  for (int i = 0; i < count; ++i) {
+    printf("%d\n", va_arg(args, int));
+  }
+
+  return number + 3;
+}
+int main(){
+  printf("%d\n", coolFunction(3, 1, 2, 3));
+}
+```
+
+```
+1
+2
+3
+6
+```
+
+Alright! We could create simple `sum`, `min`, and `max` functions like this, but there
+are a few things bothering me right here. First: the `count` variable. I just arbitrarily
+decided it would be 3. But if I have that information then why would I need variadic functions?
+The answer is I won't. It's only useful if I **don't** know the `count` value from within the function.
+
+So how do we know how many arguments we're going to have to iterate through?
+Well, and you're going to think this is pretty lame, but we have to pass that as a variable.
+For example, `int coolFunction(int count, int number, ...)`.
+
+But wait `printf` doesn't do that, right?
+
+Actually, it just iterates through the format string and counts the amount of %'s (that are not escaped)
+and uses that as a count.
+
+Here's another problem: type information is lost. Say I wanted the same code but used `coolFunction(3, "hello", 1, 3);`
+on the last line. I would need to have that type in my `va_arg` macro call.
+
+Is there any way I could check the type of my variadic argument and do something like
+
+```C
+if(type(arg) == int) {
+  /* do this */
+}
+else {
+  /* do that */
+}
+```
+
+Answer: no. Type information is lost. We're just playing with pointers. That's why the format string
+uses the %d and %x and %\{whatever\}. That's the workaround - _you_ put the types in.
+
+Actually `printf` is kind of genius in the way it makes _you_ do a lot of the computer's work:
+
+-   You tell the function how many arguments you expect
+-   You give the types of those arguments
+
+And you didn't even realize! You poor fool!
+
+Compare this to Pascal, where you can write `println("hello", 52, "this", 1337, 1337, "is valid");`
+and the system does the work _for you_. There's nothing particularly special about the `%` sign either,
+we could just as easily write a `int cool_printf(const char* format, ...);` that uses the `$` character
+as its escape character and `$i` could be equivalent to `%d`.
+
+For more on this, check out [stdarg.h - Wikipedia](https://en.wikipedia.org/wiki/Stdarg.h)
+
+
+# sizeof 
+
+Alright, now for the tricky one. First of all, `sizeof` is a
+compiler built-in. That means we _can't_ write our own version.
+
+It's also a macro, so it doesn't need to abide by the simple
+mortal rules of the C syntax.
+
+This makes sense since the compiler is responsible for knowing things about
+my register sizes, architecture, and other low level goodness, and
+since `sizeof` tells me those things, I knew there would be something fundamental
+about it.
+
+But in fact `sizeof` is quite powerful. When doing the blackmagicvoodoo of pointer
+arithmetic _it's using sizeof under the hood_. How's that for fundamental?
+
+Not only that, but sizeof can take a regular variable (like "number" above), it can
+take a type (like "int") and it can take an expression (like "4 + 42"). Also because
+of its /macro/ness you can write
+
+`sizeof 5 + 5` which will be parsed as `sizeof(5) + 5` which means the size of the number
+5 (4 bytes on my computer) + 5 which is 9.
+
+But `sizeof(5 + 5)` will be `sizeof(5+5) = sizeof(10)` which is 4 bytes.
+
+In fact, mastery of sizeof is kind of a requirement for high-level C-fu especially for proper
+struct packing.
+
+Finally, checkout this [Implement sizeof Operator in C using Macro](https://cs-fundamentals.com/tech-interview/c/implement-sizeof-operator-in-c) - interesting approach.
+
+
+# Conclusion 
+
+So did I finally learn precisely what was going with that first program of mine, more than
+three years later? Actually no. And to be honest, I don't think I ever will unless I somehow
+get on the `gcc` core team. For example, I know `main` and `_start:` are linked somehow, but
+how?
+
+It's actually stunning the tremendous amount of abstraction that we work under.
+
+Today I sat down and tried to understand
+exactly what was going on in the tiniest of tiny C programs and found a fractal amount of
+depth containing macros, m4, compilers, and standard libraries.
+
+I can't even begin to imagine what that would look like in a language like python.
+
+Although I've got to say, it's been a fascinating dive. Maybe I'll do another sometime.
+But for now, it seems I'm still whispering incantations and watching bits flip.

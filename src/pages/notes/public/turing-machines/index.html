@@ -1,0 +1,110 @@
+<!DOCTYPE>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Turing Machines | Mind excursions</title>
+  <meta name="title" content="Turing Machines">
+  <meta name="citation_title" content="Turing Machines">
+  <meta name="og:title" content="Turing Machines">
+  <meta name="creator" content="notes.sinakhalili.com">
+  <meta name="author" content="Sina Khalili">
+  <meta name="citation_author" content="Sina Khalili">
+  <link rel="index" title="Sina's notes" href="https://notes.sinakhalili.com">
+  <meta name="og:site" content="https://notes.sinakhalili.com">
+  <meta name="og:type" content="article">
+  <link rel="canonical" href="https://notes.sinakhalili.com/turing-machines/index.html">
+  <link rel="stylesheet" href="/static/styles/main.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/static/favicon/site.webmanifest">
+  <script>
+  var currentTheme = localStorage.getItem("theme");
+
+  if (currentTheme == "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+  </script>
+
+</head>
+<body>
+
+
+<div class="item">
+  <div class="jello-horizontal">
+    <picture>
+      <source class="shadow-pop-bl" srcset="/static/img/face-top-min.webp" type="image/webp">
+     <a href="/clicking-the-head-should-do-something">
+      <img class="shadow-pop-bl" src="/static/img/face-top-min.png" alt="picture of sin">
+     </a> 
+    </picture>
+  </div>
+    <h2>Sina’s PKM</h2>
+  <nav>
+      <a href="/"> 🏚 Home</a>
+      <a href="/how-to-use-this-site"> 🤔 How to use this site</a>
+      <a href="#" onclick="toggleTheme()">⚙️ Toggle dark mode</a>
+  </nav>
+  <input type="search" name="algolia_search" id="search" placeholder="🔎  Search...">
+
+</div>
+
+<div class="main">
+  <article>
+    <h1>Turing Machines</h1>
+    <div><p><em>[ <a href="http://localhost:8000/category---computer-science/" class="wikilink">Category - Computer Science</a> ][ <a href="http://localhost:8000/complexity-theory/" class="wikilink">complexity theory</a> ]</em></p>
+<h1>Turing Machines</h1>
+<h3>History</h3>
+<p>In his 1936 paper <em>ON COMPUTABLE NUMBERS, WITH AN APPLICATION TO THE ENTSCHEIDUNGSPROBLEM</em>, Alan Turing introduced the concept of a Turing Machine, which is a machine capable of performing any symbolic calculation - this is argued in the <span class="nolink">Church-Turing Thesis</span>.</p>
+<h3>Formal Definition</h3>
+<p>A TM is a 7-tuple of the form:
+$$ M = (Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject}) $$
+Where:</p>
+<ul>
+<li>$Q$ is a finite set of states (&quot;states of the mind&quot;)</li>
+<li>$\Sigma$ is finite input alphabet (often binary)</li>
+<li>$\Gamma$ is the finite tape alphabet, containing $\Sigma$ as well as the special empty/space symbol</li>
+<li>$\delta : Q \times \Gamma \to Q \times \Gamma \times { L, R }$ the transition function mapping to Left-Right movements</li>
+</ul>
+</div>
+  </article>
+</div>
+
+<div class="item right-bar">
+  <h2>Pages that link here:</h2>
+    
+        <p><a class="wikilink" href="/emergent-behaviour/">emergent behaviour</a><br>Behaviour that's amazingly complex, intracate and overall astounding is emergent from a set of simple base rules</p>
+    
+        <p><a class="wikilink" href="/complexity-theory/">complexity theory</a><br>[ Category - Computer Science ]
+The study of the difficulty of problems</p>
+    
+        <p><a class="wikilink" href="/determinism-machine/">determinism machine</a><br>[ half-baked ]
+best way to simulate a Turing Machines is to run it</p>
+    
+  <h3>Current <a href="/stats">progress</a>:</h3>
+  <p><span class="progress" id="progress">Loading...</span> articles read 🤓 </p>
+  <a href="" onclick="clearProgress()">clear progress? 🚨</button>
+</div>
+
+
+
+
+</body>
+<script src="/static/scripts/main.js"></script>
+<script src="/static/scripts/progress.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@algolia/algoliasearch-netlify-frontend@0/dist/algoliasearchNetlify.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@algolia/algoliasearch-netlify-frontend@0/dist/algoliasearchNetlify.js"></script>
+<script type="text/javascript">
+  algoliasearchNetlify({
+    appId: 'DHTACBTDRW',
+    apiKey: 'e5d561894c559b5fb414f30bfc24c5d6',
+    siteId: '0928febf-1302-4002-b548-306e74b39e9b',
+    branch: 'master',
+    autocomplete: {
+      inputSelector: 'input[type=search]',
+    },
+  });
+</script>
+</html>

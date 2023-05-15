@@ -1,0 +1,1 @@
+The written word. The single greatest brain-to-brain communication device we have. 
