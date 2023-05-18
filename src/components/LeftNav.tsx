@@ -64,6 +64,12 @@ const leftNavData: INavItem[] = [
   {
     title: "projects",
     href: "/projects",
+    more: [
+      {
+        title: "mini crossword",
+        href: "/projects/crossword",
+      },
+    ],
   },
   {
     title: "quotes",

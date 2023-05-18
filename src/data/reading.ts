@@ -68,3 +68,22 @@ export const FavoriteBooksData: BookData[] = [
     author: "Eliezer Yudkowsky",
   },
 ];
+
+export const BooksThatHauntMe: BookData[] = [
+  {
+    title: "Two Arms and a Head",
+    author: "Clayton Atreus",
+  },
+  {
+    title: "Fanged Noumena",
+    author: "Nick Land",
+  },
+  {
+    title: "Watchmen",
+    author: "Alan Moore",
+  },
+  {
+    title: "Infinite Jest (again)",
+    author: "David Foster Wallace",
+  },
+];

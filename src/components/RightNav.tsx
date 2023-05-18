@@ -1,4 +1,6 @@
+import { links } from "@/data/links";
 import { Box, Flex, Text } from "@chakra-ui/react";
+import Link from "next/link";
 
 export const RightNav = () => {
   return (
@@ -14,10 +16,8 @@ export const RightNav = () => {
           direction="column"
           alignItems="center"
           h="97%"
-          bgColor="white"
           w="97%"
           borderRadius="10px"
-          shadow="lg"
           overflowY="scroll"
           css={{
             "&::-webkit-scrollbar": {
@@ -31,11 +31,34 @@ export const RightNav = () => {
               borderRadius: "24px",
             },
           }}
-          bgImage={`url('/depth.jpg')`}
+          p={3}
         >
-          <Text bg="white" w="100%" textAlign="center" fontWeight="bold" p={3}>
-            Oh wow, its the right-nav!
+          <Text
+            bg="whiteAlpha.600"
+            w="100%"
+            textAlign="center"
+            fontFamily="charter"
+            fontWeight="bold"
+            p={3}
+            borderRadius="full"
+          >
+            Cool links from around the web
           </Text>
+          {links.map((link, index) => (
+            <Box
+              key={index}
+              w="100%"
+              my={3}
+              bgColor="whiteAlpha.600"
+              p={2}
+              borderRadius="10px"
+            >
+              <Link className="md-link" href={link.href}>
+                {link.href}
+              </Link>
+              <Text>{link.summary}</Text>
+            </Box>
+          ))}
         </Flex>
       </Flex>
     </Box>

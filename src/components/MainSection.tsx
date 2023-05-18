@@ -45,9 +45,9 @@ export const MainSection = ({ children }: IMainSectionProps) => {
             w={["auto", "auto", "75ch"]}
             minH={["100vh", "100vh", "100vh", "auto"]}
             fontSize="16px"
-            m="20px"
+            my="20px"
           >
-            <article>{children}</article>
+            <Box>{children}</Box>
           </Box>
         </Flex>
       </Flex>

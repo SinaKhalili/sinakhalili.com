@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "diff": "yarn supabase db diff --schema public",
+    "scripts:schema": "bun run src/scripts/schema.ts"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
@@ -16,8 +18,10 @@
     "@mdx-js/loader": "^2.0.0-rc.2",
     "@mdx-js/react": "^2.0.0-rc.2",
     "@next/font": "^13.4.2",
+    "@observablehq/plot": "^0.6.6",
     "@reach/disclosure": "^0.18.0",
     "@reach/tooltip": "^0.18.0",
+    "@supabase/supabase-js": "^2.22.0",
     "@types/node": "18.16.3",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
@@ -25,16 +29,19 @@
     "eslint-config-next": "13.3.1",
     "framer-motion": "^10.12.10",
     "gray-matter": "^4.0.3",
+    "lightweight-charts": "^4.0.1",
     "next": "13.3.1",
     "party-js": "^2.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "recharts": "^2.6.2",
     "rehype-highlight": "^6.0.0",
     "remark-frontmatter": "^4.0.1",
     "tachyons": "4.12.0",
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "supabase": "^1.61.0",
     "ts-node": "^10.9.1"
   }
 }

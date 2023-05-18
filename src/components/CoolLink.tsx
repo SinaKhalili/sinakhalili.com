@@ -26,6 +26,7 @@ export const CoolLink = ({ href, children, title }: ICoolLinkProps) => {
         textDecoration: "none",
         transform: "scale(1.05)",
         shadow: "lg",
+        bgColor: "white",
       }}
       _active={{
         transform: "scale(0.9)",

@@ -1,6 +1,7 @@
 import { ReadingList } from "@/components/ReadingList";
 import { Text, Box, Heading, Image, VStack, Flex } from "@chakra-ui/react";
 import {
+  BooksThatHauntMe,
   CurrentlyReadingData,
   FavoriteBooksData,
   RecentlyReadData,
@@ -20,6 +21,9 @@ export default function Reading() {
         <Heading>Favourite books</Heading>
         <Text fontSize="sm">(In no particular order)</Text>
         <BookListTable books={FavoriteBooksData} />
+        <Heading>Books that haunt me</Heading>
+        <Text fontSize="sm">(In no particular order)</Text>
+        <BookListTable books={BooksThatHauntMe} />
       </VStack>
       <Flex direction="column" my="45px">
         <Text>

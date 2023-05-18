@@ -4,11 +4,11 @@ import {
   Box,
   Button,
   Flex,
-  Link,
   SlideFade,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import Link from "next/link";
 
 interface ILefNavAccordionProps {
   item: {
@@ -52,23 +52,13 @@ export const LeftNavAccordion = ({ item }: ILefNavAccordionProps) => {
       </Flex>
       <SlideFade in={isOpen} offsetY="20px">
         {isOpen && (
-          <Box>
+          <>
             {item.more.map((subItem, subIndex) => (
-              <Box key={subIndex}>
-                <Link className="md-link" href={subItem.href}>
-                  <Text
-                    color="black"
-                    _hover={{
-                      color: "blue",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {"👉"} {subItem.title}
-                  </Text>
-                </Link>
-              </Box>
+              <Link key={subIndex} className="md-link" href={subItem.href}>
+                {"👉"} {subItem.title}
+              </Link>
             ))}
-          </Box>
+          </>
         )}
       </SlideFade>
     </Box>
