@@ -143,7 +143,7 @@ class Profile < ApplicationRecord
 end
 ```
 You can add a link to create your profile in the layout (new_profile_path)
-```erb
+```
  <% if signed_in? %>
    Welcome back, <%= current_user.email %> (<%= link_to 'Sign out', sign_out_path, method: :delete %>)
     Make sure to <%= link_to  "Update your profile", edit_profile_path %>

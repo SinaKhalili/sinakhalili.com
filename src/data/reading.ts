@@ -8,7 +8,7 @@ export const CurrentlyReadingData: BookData[] = [
   {
     title: "Object Oriented Ontology",
     author: "Graham Harman",
-    cover: "/bookcovers/ooo.jpg",
+    cover: "/bookcovers/OOO.jpg",
   },
   {
     title: "Computer Power and Human Reason",
