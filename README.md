@@ -9,7 +9,7 @@ Feel free to take, modify, read, and re-use whatever you see fit.
 
 ## Getting Started
 
-You need all the classics: yarn[https://yarnpkg.com/], node[https://nodejs.org/en/], git[https://git-scm.com/], docker[https://www.docker.com/]. The friends that always come out to play.
+You need all the classics: [yarn](https://yarnpkg.com/), [node](https://nodejs.org/en/), [git](https://git-scm.com/), [docker](https://www.docker.com/). The friends that always come out to play.
 
 
 Clone the repo and install the dependencies with `yarn`
