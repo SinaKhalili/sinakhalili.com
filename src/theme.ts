@@ -63,6 +63,15 @@ export const theme = extendTheme({
           outline: "5px solid blue",
         },
       },
+      ".nav-link": {
+        transition: "all 0.2s ease-in-out",
+        color: "black",
+        _hover: {
+          backgroundColor: "blue.600",
+          color: "white",
+          outline: "5px solid blue",
+        },
+      },
       ".md-listitem": {
         marginBottom: "0.5rem",
         listStylePosition: "inside",

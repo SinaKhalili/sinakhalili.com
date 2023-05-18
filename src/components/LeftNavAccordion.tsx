@@ -54,7 +54,7 @@ export const LeftNavAccordion = ({ item }: ILefNavAccordionProps) => {
         {isOpen && (
           <>
             {item.more.map((subItem, subIndex) => (
-              <Link key={subIndex} className="md-link" href={subItem.href}>
+              <Link key={subIndex} className="nav-link" href={subItem.href}>
                 {"👉"} {subItem.title}
               </Link>
             ))}

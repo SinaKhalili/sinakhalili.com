@@ -202,7 +202,7 @@ export default function Projects() {
         </PopCitation>
       </Flex>
       <Text>
-        For instruction on how to get your NYT cookie, see{" "}
+        For instructions on how to get your NYT cookie, see{" "}
         <Link className="md-link" href="/projects/crossword/how-to">
           how to get your new york times cookie
         </Link>

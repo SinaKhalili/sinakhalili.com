@@ -38,12 +38,14 @@ export const ProjectCard = ({
           )}
           <Box>
             {website && (
-              <>
-                <Text>online 🟢</Text>
-                <Link className="md-link" href={website}>
-                  website
-                </Link>
-              </>
+              <Flex>
+                <Text mr={3}>online 🟢</Text>
+                <Text color="blue">
+                  <Link className="md-link" href={website}>
+                    {website}
+                  </Link>
+                </Text>
+              </Flex>
             )}
           </Box>
           <Text mt={4}>{description}</Text>

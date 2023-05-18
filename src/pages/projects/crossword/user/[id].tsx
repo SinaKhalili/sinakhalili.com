@@ -137,6 +137,14 @@ export default function CrosswordUserPage() {
               solveInfo={getSorted(solveInfo).at(-1)}
               text="Worst time"
             />
+            <CrosswordStatCard
+              solveInfo={
+                getSorted(solveInfo)[
+                  Math.floor(getSorted(solveInfo).length / 2)
+                ]
+              }
+              text="Median time"
+            />
           </Flex>
           <ChartCrosswordStats solveInfo={solveInfo} />
           <ChartCrosswordStats2 solveInfo={solveInfo} />

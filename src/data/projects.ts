@@ -1,5 +1,18 @@
 export const projects = [
   {
+    name: "mini crossword stats",
+    description: `
+    A page that displays statistics for the New York Times mini crossword.
+    Compare historical times, see how you stack up against the competition, and more
+    random stats.
+    It's hosted right here, on sinakhalili.com, actually! 
+    `,
+    website: "/projects/crossword",
+    repo: "",
+    imageSrc: "/minicross.png",
+    imageAlt: "mini crossword stats",
+  },
+  {
     name: "crosswordy",
     description: `
     Crosswordy is a serverless Discord bot that provides users with crossword hints or answers. 
@@ -13,7 +26,7 @@ export const projects = [
   {
     name: "qootlet",
     description:
-      "Arbitrarily long data as QR codes from chaining QR codes together in a GIF",
+      "Arbitrarily long data as QR codes from chaining QR codes together in a GIF.",
     website: "https://qootlet.com",
     imageSrc: "/projects/qootlet.gif",
     imageAlt: "qootlet",
