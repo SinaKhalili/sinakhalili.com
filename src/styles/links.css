@@ -672,3 +672,26 @@ a[href$=".xcf" i]::after,
 a[href*="imgur.com"]::after {
   background-image: url("/static/img/icons/image.svg");
 }
+
+/* === more stuff === */
+
+/* for crosswords */
+a[href*="nytimes.com"]::after {
+  content: "";
+  display: inline-block;
+  position: static;
+  background-image: url("/static/img/icons/nyt.svg");
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: contain;
+  height: 0.75em;
+  width: 0.75em;
+  margin: 0 2px;
+  opacity: 0.44;
+  filter: var(--anchor-filter);
+  -webkit-filter: var(--anchor-filter);
+}
+
+a[href*="nytimes.com"]:hover::after {
+  opacity: 0.2;
+}

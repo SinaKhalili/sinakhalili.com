@@ -100,7 +100,12 @@ export default function Home({ posts }: HomeProps) {
             borderColor="gray.200"
             borderRadius="md"
           >
-            <Text>posts</Text>
+            <Text>
+              posts{" "}
+              <Link className="md-link" href="/posts">
+                <chakra.span>(more)</chakra.span>
+              </Link>
+            </Text>
             {posts.map((post) => (
               <PostItem key={post.slug} post={post} />
             ))}
@@ -112,7 +117,12 @@ export default function Home({ posts }: HomeProps) {
             borderColor="gray.200"
             borderRadius="md"
           >
-            <Text>reading</Text>
+            <Text>
+              reading{" "}
+              <Link className="md-link" href="/reading">
+                <chakra.span>(more)</chakra.span>
+              </Link>
+            </Text>
             {CurrentlyReadingData.map((book) => (
               <RecentItem key={book.title} title={book.title} link="/reading" />
             ))}
@@ -124,12 +134,17 @@ export default function Home({ posts }: HomeProps) {
             borderColor="gray.200"
             borderRadius="md"
           >
-            <Text>projects</Text>
+            <Text>
+              projects{" "}
+              <Link className="md-link" href="/projects">
+                <chakra.span>(more)</chakra.span>
+              </Link>
+            </Text>
             {projects.map((project) => (
               <RecentItem
                 key={project.name}
                 title={project.name}
-                link={project.repo}
+                link={project.website ? project.website : project.repo}
               />
             ))}
           </Box>

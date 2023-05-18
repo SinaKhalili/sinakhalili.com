@@ -35,7 +35,7 @@ const Layout = ({ children }: ILayoutProps) => {
           fontSize="xs"
           color="white"
         >
-          beep boop beep boop
+          beep boop beep boop. thus is the procedure.
         </Text>
       </Box>
     </>

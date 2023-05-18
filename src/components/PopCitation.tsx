@@ -7,6 +7,7 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   Link,
+  Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
@@ -29,7 +30,11 @@ export const PopCitation = ({ children }: IPopCitationProps) => {
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
-        <PopoverBody>{children}</PopoverBody>
+        <PopoverBody>
+          <Text fontWeight="normal" fontFamily="inter" fontSize="sm">
+            {children}
+          </Text>
+        </PopoverBody>
       </PopoverContent>
     </Popover>
   );

@@ -22,7 +22,7 @@ export const CrosswordStatCard = ({
       </Text>
       <Text mb={2}>{formatDateToEnglish(solveInfo?.puzzle_id?.date)}</Text>
       <Link className="md-link" href={toNytURL(solveInfo?.puzzle_id?.date)}>
-        👉 view puzzle
+        view puzzle
       </Link>
     </Box>
   );

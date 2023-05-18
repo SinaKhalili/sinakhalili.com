@@ -6,12 +6,7 @@ interface IMainSectionProps {
 
 export const MainSection = ({ children }: IMainSectionProps) => {
   return (
-    <Box
-      flexGrow={1}
-      bgColor="brand.100"
-      w="100%"
-      mb={["20px", "20px", "20px", "0px"]}
-    >
+    <Box flexGrow={1} w="100%" mb={["20px", "20px", "20px", "0px"]}>
       <Flex
         direction="column"
         alignItems="center"
@@ -23,9 +18,10 @@ export const MainSection = ({ children }: IMainSectionProps) => {
           direction="column"
           alignItems="center"
           h="97%"
+          w="100%"
           bgColor="white"
-          w="97%"
           borderRadius="10px"
+          px={[5, 5, 5, 2]}
           shadow="lg"
           overflowY={["auto", "auto", "auto", "scroll"]}
           css={{

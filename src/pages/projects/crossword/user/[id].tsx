@@ -128,7 +128,7 @@ export default function CrosswordUserPage() {
           </Text>
         </Box>
         <Box my={5}>
-          <Flex>
+          <Flex wrap="wrap">
             <CrosswordStatCard
               solveInfo={getSorted(solveInfo)[0]}
               text="Best time"

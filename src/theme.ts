@@ -42,6 +42,7 @@ export const theme = extendTheme({
     heading: charter.style.fontFamily,
     body: inter.style.fontFamily,
     p: inter.style.fontFamily,
+    inter: inter.style.fontFamily,
   },
   styles: {
     global: {
