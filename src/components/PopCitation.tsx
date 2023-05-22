@@ -8,6 +8,7 @@ import {
   PopoverCloseButton,
   Link,
   Text,
+  Box,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
@@ -22,20 +23,22 @@ export const PopCitation = ({ children }: IPopCitationProps) => {
   }, []);
   if (!loaded) return null;
   return (
-    <Popover trigger="hover">
-      <PopoverTrigger>
-        <Link color="blue" mx="2px" fontSize="xs">
-          [note]
-        </Link>
-      </PopoverTrigger>
-      <PopoverContent>
-        <PopoverArrow />
-        <PopoverBody>
-          <Text fontWeight="normal" fontFamily="inter" fontSize="sm">
-            {children}
-          </Text>
-        </PopoverBody>
-      </PopoverContent>
-    </Popover>
+    <Box display="inline-block">
+      <Popover trigger="hover">
+        <PopoverTrigger>
+          <Link color="blue" mx="2px" fontSize="xs">
+            [note]
+          </Link>
+        </PopoverTrigger>
+        <PopoverContent>
+          <PopoverArrow />
+          <PopoverBody>
+            <Text fontWeight="normal" fontFamily="inter" fontSize="sm">
+              {children}
+            </Text>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
+    </Box>
   );
 };

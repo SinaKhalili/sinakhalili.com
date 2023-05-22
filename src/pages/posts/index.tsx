@@ -1,4 +1,4 @@
-import { getPosts } from "@/scripts/utils";
+import { getPosts } from "@/scripts/getPosts";
 import Meta from "@/components/Meta";
 import MeetMe from "@/components/MeetMe";
 import PostItem from "@/components/PostItem";

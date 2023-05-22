@@ -15,15 +15,8 @@ export default function Projects() {
       <Text>
         We do a little coding. We do a little art.
         <PopCitation>
-          Unfortunately, I don&apos;t have a lot of time to do either of these
-          things.
-          <PopCitation>
-            Also unfortunately, I&apos;m not very good at finishing either of
-            these things
-            <PopCitation>
-              Finally, as always, the best shit is closed source
-            </PopCitation>
-          </PopCitation>
+          Unfortunately, I&apos;m not very good at finishing either of these
+          things
         </PopCitation>
       </Text>
       <Flex>

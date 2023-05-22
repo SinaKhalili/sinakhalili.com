@@ -166,9 +166,26 @@ export function toNytURL(date: string | undefined) {
     .replaceAll("-", "/")}`;
 }
 
-export function getSorted(solveInfo: SolveInfo[] | null): SolveInfo[] {
+export function getSorted(
+  solveInfo: SolveInfo[] | null,
+  day: string | null = null
+): SolveInfo[] {
   if (!solveInfo) return [];
-  const sorted = [...solveInfo].sort((a, b) => {
+
+  let filtered = solveInfo;
+  if (day) {
+    filtered = [...solveInfo].filter((info) => {
+      const puzzleDate = new Date(info.puzzle_id.date);
+      // day will be like "saturday" or "sunday"
+      return (
+        day.toLowerCase() ===
+        puzzleDate
+          .toLocaleDateString("en-US", { weekday: "long" })
+          .toLowerCase()
+      );
+    });
+  }
+  const sorted = [...filtered].sort((a, b) => {
     return a.seconds_spent_solving - b.seconds_spent_solving;
   });
 

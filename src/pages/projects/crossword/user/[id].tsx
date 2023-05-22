@@ -14,6 +14,7 @@ import {
 import { Board, SolveInfo } from "@/lib/crossword/types";
 import {
   Box,
+  Button,
   Flex,
   Heading,
   Spinner,
@@ -25,6 +26,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -124,10 +126,14 @@ export default function CrosswordUserPage() {
           <Heading>{userInfo["username"]}</Heading>
           <Text my={5}>
             Joined the sinakhalili.com leaderboards on{" "}
-            {formatDateToEnglish(userInfo["created_at"].split("T")[0])}
+            {formatDateToEnglish(userInfo["created_at"].split("T")[0])}{" "}
+            <Link className="md-link" href={`/projects/crossword`}>
+              [back]
+            </Link>
           </Text>
         </Box>
         <Box my={5}>
+          <Heading size="md">General</Heading>
           <Flex wrap="wrap">
             <CrosswordStatCard
               solveInfo={getSorted(solveInfo)[0]}
@@ -146,10 +152,86 @@ export default function CrosswordUserPage() {
               text="Median time"
             />
           </Flex>
+          <Heading size="md">Best by Day</Heading>
+          <Flex wrap="wrap">
+            {[
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ].map((day) => (
+              <CrosswordStatCard
+                key={day}
+                solveInfo={getSorted(solveInfo, day)[0]}
+                text={`Best ${day}`}
+              />
+            ))}
+          </Flex>
+          <Heading size="md">Worst by Day</Heading>
+          <Flex wrap="wrap">
+            {[
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ].map((day) => (
+              <CrosswordStatCard
+                key={day}
+                solveInfo={getSorted(solveInfo, day).at(-1)}
+                text={`Worst ${day}`}
+              />
+            ))}
+          </Flex>
+          <Heading size="md">Median by Day</Heading>
+          <Flex wrap="wrap">
+            {[
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ].map((day) => (
+              <CrosswordStatCard
+                key={day}
+                solveInfo={
+                  getSorted(solveInfo, day)[
+                    Math.floor(getSorted(solveInfo, day).length / 2)
+                  ]
+                }
+                text={`Median ${day}`}
+              />
+            ))}
+          </Flex>
           <ChartCrosswordStats solveInfo={solveInfo} />
           <ChartCrosswordStats2 solveInfo={solveInfo} />
         </Box>
-        <Heading size="md">Solve History</Heading>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Heading size="md">Solve History</Heading>
+          <Button
+            borderRadius="none"
+            onClick={() => {
+              // download the solve history as json
+              const element = document.createElement("a");
+              const file = new Blob([JSON.stringify(solveInfo)], {
+                type: "text/plain;charset=utf-8",
+              });
+              element.href = URL.createObjectURL(file);
+              element.download = "solve-history.json";
+              document.body.appendChild(element);
+              element.click();
+            }}
+          >
+            Download solve history
+          </Button>
+        </Flex>
         <Text>🟠 - sub 1 🟡 - sub 40 🟢 - sub 30</Text>
       </Box>
       <Box overflowX="scroll">

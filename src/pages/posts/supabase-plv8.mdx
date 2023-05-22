@@ -1,0 +1,130 @@
+---
+title: Run and return sql in supabase with plv8 - a cheesy hack
+publishedOn: May 20, 2023
+---
+
+import { PopCitation } from '@/components/PopCitation'
+
+# Run and return sql in supabase with plv8 - a cheesy hack
+
+**Warning: Probably a bad idea**
+
+So you want to run an arbitrary sql statement in supabase and return
+json? And you don't want to learn that weird plpgsql language? because
+chatGPT can't write decent plpgsql to save it's aritficial life?
+
+Well you're in luck! We simply have to use the `plv8` extension and
+then we can run arbitrary javascript in our sql statements.
+
+> But how does that help us? 
+
+Good question. We can also run arbitrary `sql` in the javascript!
+<PopCitation>
+I told you it was cheesy.
+</PopCitation>
+
+So let's say you have a table for storing you and your friends
+crossword scores. There's a table with a puzzle_id, a user_id, and a
+score. You whisper this request into the LLM and it spits out:
+
+```sql
+WITH ranked_solves AS (
+  SELECT user_id, puzzle_id, seconds_spent_solving,
+    ROW_NUMBER() OVER (PARTITION BY puzzle_id ORDER BY seconds_spent_solving ASC) AS rank
+  FROM crosswordsolves
+  WHERE is_solved = true
+)
+SELECT crosswordusers.id,
+  COUNT(CASE WHEN rank = 1 THEN 1 END)::INTEGER AS first_place_finishes,
+  COUNT(CASE WHEN rank = 2 THEN 1 END)::INTEGER AS second_place_finishes,
+  COUNT(*)::INTEGER AS total_solves_attempted
+FROM ranked_solves
+JOIN crosswordusers ON ranked_solves.user_id = crosswordusers.id
+GROUP BY crosswordusers.id;
+```
+
+Of course, we are normal humans so we can't read SQL. But you
+run the query and it seems to work. Now, just to convert this
+query to plpgsql and you're done.
+
+Oh wait! You can't write plpgsql! And you don't want to learn
+it! 
+
+That's where our friend plv8 comes in. We can write a function
+that runs this query and returns the results as json. Then we
+can call that function from our sql statement.
+
+```javascript
+  var num_affected = plv8.execute(`
+WITH ranked_solves AS (
+  SELECT user_id, puzzle_id, seconds_spent_solving,
+    ROW_NUMBER() OVER (PARTITION BY puzzle_id ORDER BY seconds_spent_solving ASC) AS rank
+  FROM crosswordsolves
+  WHERE is_solved = true
+)
+SELECT crosswordusers.id,
+  COUNT(CASE WHEN rank = 1 THEN 1 END)::INTEGER AS first_place_finishes,
+  COUNT(CASE WHEN rank = 2 THEN 1 END)::INTEGER AS second_place_finishes,
+  COUNT(*)::INTEGER AS total_solves_attempted
+FROM ranked_solves
+JOIN crosswordusers ON ranked_solves.user_id = crosswordusers.id
+GROUP BY crosswordusers.id;
+  `);
+
+  // Convert BigInt values to integers
+  num_affected.forEach(row => {
+    row.id = parseInt(row.id);
+    row.first_place_finishes = parseInt(row.first_place_finishes);
+    row.second_place_finishes = parseInt(row.second_place_finishes);
+  });
+
+  return JSON.stringify(num_affected);
+```
+
+And then we just wrap this in the function definition and we're
+done (my syntax highlighting is broken here of course)
+
+```sql
+create extension plv8;
+set check_function_bodies = off;
+
+CREATE OR REPLACE FUNCTION public.get_stats()
+ RETURNS json
+ LANGUAGE plv8
+AS $function$
+  var num_affected = plv8.execute(`
+WITH ranked_solves AS (
+  SELECT user_id, puzzle_id, seconds_spent_solving,
+    ROW_NUMBER() OVER (PARTITION BY puzzle_id ORDER BY seconds_spent_solving ASC) AS rank
+  FROM crosswordsolves
+  WHERE is_solved = true
+)
+SELECT crosswordusers.id,
+  COUNT(CASE WHEN rank = 1 THEN 1 END)::INTEGER AS first_place_finishes,
+  COUNT(CASE WHEN rank = 2 THEN 1 END)::INTEGER AS second_place_finishes,
+  COUNT(*)::INTEGER AS total_solves_attempted
+FROM ranked_solves
+JOIN crosswordusers ON ranked_solves.user_id = crosswordusers.id
+GROUP BY crosswordusers.id;
+  `);
+
+  // Convert BigInt values to integers
+  num_affected.forEach(row => {
+    row.id = parseInt(row.id);
+    row.first_place_finishes = parseInt(row.first_place_finishes);
+    row.second_place_finishes = parseInt(row.second_place_finishes);
+  });
+
+  return JSON.stringify(num_affected);
+$function$
+;
+```
+
+To call it on the client or server, you just use the `rpc` method
+on the supabase client.
+
+```javascript
+const { data, error } = await supabaseAdmin.rpc("get_stats");
+```
+
+And that's it! You can now run arbitrary sql and return json.

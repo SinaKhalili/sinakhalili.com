@@ -16,7 +16,9 @@ const PostItem = ({ post }: PostItemProps) => {
       <Link className="md-link" href={`/posts/${post.slug}`}>
         {post.data.title}
       </Link>
-      <Text fontSize="sm" as="span" mx={1} fontStyle="italic"></Text>
+      <Text fontSize="sm" as="span" mx={1} fontStyle="italic">
+        {post.data.publishedOn}
+      </Text>
     </Flex>
   );
 };

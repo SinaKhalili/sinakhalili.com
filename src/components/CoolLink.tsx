@@ -24,12 +24,12 @@ export const CoolLink = ({ href, children, title }: ICoolLinkProps) => {
       href={href}
       _hover={{
         textDecoration: "none",
-        transform: "scale(1.05)",
+        transform: "scale(1.03)",
         shadow: "lg",
         bgColor: "white",
       }}
       _active={{
-        transform: "scale(0.9)",
+        transform: "scale(0.95)",
       }}
       title={title}
       w="100%"

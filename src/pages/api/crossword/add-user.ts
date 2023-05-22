@@ -11,8 +11,13 @@ export default async function handler(
     return;
   }
 
-  const { cookie } = req.body;
+  let { cookie } = req.body;
   try {
+    cookie = cookie.replace("'", "");
+    if (cookie.length < 5) {
+      res.status(400).json({ error: "Invalid cookie" });
+      return;
+    }
     const user = await getCrosswordUser(cookie);
     await addOrRefreshCrosswordUser(cookie, user.name, user.userID);
     await getMiniCrosswordData(cookie);

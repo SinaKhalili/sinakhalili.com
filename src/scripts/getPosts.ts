@@ -25,5 +25,13 @@ export const getPosts = (pageIndex: number) => {
     })
     .filter((post) => post);
 
+  posts.sort((a, b) => {
+    const adate = new Date(a?.data.publishedOn);
+    const bdate = new Date(b?.data.publishedOn);
+    console.log(adate.getTime(), bdate.getTime());
+
+    return bdate.getTime() - adate.getTime();
+  });
+
   return posts;
 };

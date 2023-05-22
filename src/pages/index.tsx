@@ -1,4 +1,4 @@
-import { getPosts } from "@/scripts/utils";
+import { getPosts } from "@/scripts/getPosts";
 import Meta from "@/components/Meta";
 import MeetMe from "@/components/MeetMe";
 import PostItem from "@/components/PostItem";
@@ -45,20 +45,17 @@ export default function Home({ posts }: HomeProps) {
           <VStack align="left">
             <Text>
               Hello friend. As the site name would suggest, I&apos;m Sina
-              Khalili.
               <PopCitation>
                 Pronounced like the{" "}
                 <chakra.span fontWeight="bold"> Cena</chakra.span> in John{" "}
-                <chakra.span fontWeight="bold">Cena</chakra.span>, and the{" "}
-                <chakra.span fontWeight="bold">Khalili</chakra.span> in
-                <chakra.span fontWeight="bold"> Khalil</chakra.span> Gibran.
+                <chakra.span fontWeight="bold">Cena</chakra.span>.
               </PopCitation>
             </Text>
             <Text>
-              I&apos;m an enthousiaste of software, art, film, startups, and the
-              sublime. Statistically speaking, those interests are probably
-              highly correlated, and if you&apos;re interested in any of those
-              things, we&apos;ll probably have even more in common.
+              I&apos;m probably thinking about software, art, film, startups,
+              and the sublime. Statistically speaking, those interests are
+              probably highly correlated, and if you&apos;re interested in any
+              of those things, we&apos;ll probably have even more in common.
               <PopCitation>
                 For example try putting your favourite subreddits into the{" "}
                 <Link

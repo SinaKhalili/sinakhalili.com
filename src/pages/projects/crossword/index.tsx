@@ -210,7 +210,7 @@ export default function Projects() {
       <Text fontWeight="bold">Enter your NYT Cookie</Text>
       <Flex w="100%">
         <Input
-          placeholder="2E4eY0SzN9G6HQTSdA8WP74J.tI2RqE7BK7GTLQeGjHJNp..."
+          placeholder="2E4eY0SzN9G6HQTSdAp..."
           borderRadius="none"
           onChange={(e) => setInput(e.target.value)}
           value={input}
@@ -233,39 +233,52 @@ export default function Projects() {
         </Text>
       )}
 
-      {loadingUsers ? (
-        <Spinner />
-      ) : (
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>name</Th>
-              <Th>1st place</Th>
-              <Th>2nd place</Th>
-              <Th>Total attempts</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {usersWithStats.map((user: CrosswordUser, index) => (
-              <Tr key={index}>
-                <Td>
-                  <Link
-                    className="md-link"
-                    href={"/projects/crossword/user/" + user.id}
-                  >
-                    {user.username}
-                  </Link>
-                </Td>
-                <Td>{user.first_place_finishes} 🏅</Td>
-                <Td>{user.second_place_finishes} 🥈</Td>
-                <Td>{user.total_solves_attempted}</Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      )}
-
-      {/* <Heading>Stats for nerds</Heading> */}
+      <Box maxW="100%" overflowX="hidden">
+        {loadingUsers ? (
+          <Spinner />
+        ) : (
+          <Box maxW="100%" overflowX="hidden">
+            <Table>
+              <Thead maxW="100%" overflowX="hidden">
+                <Tr maxW="100%" overflowX="hidden">
+                  <Th>name</Th>
+                  <Th>1st place</Th>
+                  <Th>2nd place</Th>
+                  <Th>total solves</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {usersWithStats.map((user: CrosswordUser, index) => (
+                  <Tr key={index}>
+                    <Td>
+                      <Link
+                        className="md-link"
+                        href={"/projects/crossword/user/" + user.id}
+                      >
+                        {user.username}
+                      </Link>
+                    </Td>
+                    <Td>{user.first_place_finishes}🏅</Td>
+                    <Td>{user.second_place_finishes}🥈</Td>
+                    <Td>{user.total_solves_attempted}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </Box>
+        )}
+      </Box>
+      <Heading size="md">The code</Heading>
+      <Text>
+        Unfortunately it&apos;s not a neat little package, it&apos;s a part of
+        this website&apos;s codebase, which you can find on{" "}
+        <Link
+          className="md-link"
+          href="https://github.com/sinakhalili/sinakhalili.com"
+        >
+          github
+        </Link>
+      </Text>
     </VStack>
   );
 }

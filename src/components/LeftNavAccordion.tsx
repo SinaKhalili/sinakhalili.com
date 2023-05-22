@@ -9,6 +9,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { ChevronRightIcon } from "@chakra-ui/icons";
 
 interface ILefNavAccordionProps {
   item: {
@@ -55,7 +56,19 @@ export const LeftNavAccordion = ({ item }: ILefNavAccordionProps) => {
           <>
             {item.more.map((subItem, subIndex) => (
               <Link key={subIndex} className="nav-link" href={subItem.href}>
-                {"👉"} {subItem.title}
+                <Text
+                  display="flex"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  _hover={{
+                    color: "blue",
+                  }}
+                  ml={2}
+                >
+                  {/* is it the last item */}
+                  {subIndex === item.more!.length - 1 ? "└─ " : "├─ "}
+                  {subItem.title}
+                </Text>
               </Link>
             ))}
           </>
