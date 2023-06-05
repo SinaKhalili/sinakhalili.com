@@ -8,6 +8,7 @@ import {
   enhanceSolveInformation,
   getAllCrosswordUsers,
   getSolves,
+  getUsersInLeaderboard,
   updatePuzzlesTable,
   updateSolvesTable,
 } from "@/db/crossword";
@@ -17,25 +18,30 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "GET") {
+  if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
 
+  const { leaderboard_id } = req.body;
+
   try {
-    const users = await getAllCrosswordUsers();
+    const users = await getUsersInLeaderboard(leaderboard_id);
+    console.log("users", users);
     const first = users[0];
-    const data = await getMiniCrosswordData(first.cookie);
+    if (!first.user) return;
+    const data = await getMiniCrosswordData(first.user.cookie);
     await updatePuzzlesTable(data);
 
     try {
       await Promise.all(
         users.map(async (user) => {
-          const data = await getMiniCrosswordData(user.cookie);
-          await updateSolvesTable(user.id, data);
-          const solvesForUser = await getSolves(user.id);
+          if (!user.user) return;
+          const data = await getMiniCrosswordData(user.user.cookie);
+          await updateSolvesTable(user?.user?.id, data);
+          const solvesForUser = await getSolves(user.user.id);
           const solveInformation = await getSolveInfo(
-            user.cookie,
+            user.user.cookie,
             solvesForUser
           );
           await enhanceSolveInformation(solveInformation);

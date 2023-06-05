@@ -2,6 +2,7 @@ import { getCrosswordUser, getMiniCrosswordData } from "@/lib/crossword";
 import {
   addOrRefreshCrosswordUser,
   addUserToLeaderboard,
+  createLeaderboard,
 } from "@/db/crossword";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -14,17 +15,15 @@ export default async function handler(
     return;
   }
 
-  let { cookie, leaderboard_id, password } = req.body;
+  let { cookie, name: leaderboard_name, password } = req.body;
+
   try {
-    cookie = cookie.replace("'", "");
-    if (cookie.length < 5) {
-      res.status(400).json({ error: "Invalid cookie" });
-      return;
-    }
     const user = await getCrosswordUser(cookie);
+    const board = await createLeaderboard(leaderboard_name, password);
     await addOrRefreshCrosswordUser(cookie, user.name, user.userID);
     await getMiniCrosswordData(cookie);
-    await addUserToLeaderboard(user.userID, leaderboard_id, password);
+    await addUserToLeaderboard(user.userID, board.id, password);
+
     res.status(200).json({ user: user });
   } catch (error) {
     console.log(error);

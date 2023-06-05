@@ -1,4 +1,9 @@
-import { getCrosswordUser, getStats, getStatsForRoom } from "@/db/crossword";
+import {
+  getLeaderboard,
+  getLeaderboards,
+  getMonthlyLeaderboardForRoom,
+} from "@/db/crossword";
+import { LeaderboardItem } from "@/lib/crossword/types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -10,9 +15,11 @@ export default async function handler(
     return;
   }
 
-  const { leaderboard_id } = req.body;
+  const { id, day } = req.body;
+
   try {
-    const data = await getStatsForRoom(leaderboard_id);
+    const data = await getMonthlyLeaderboardForRoom(id, day);
+
     res.status(200).json({ data });
   } catch (error) {
     res.status(500).json({ error: error });

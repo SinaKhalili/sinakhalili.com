@@ -1,6 +1,11 @@
+import { CrosswordCreateRoom } from "@/components/CrosswordCreateRoom";
 import { PopCitation } from "@/components/PopCitation";
 import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/data/projects";
+import {
+  LeaderboardItem,
+  LeaderboardItemResponse,
+} from "@/lib/crossword/types";
 import { CheckIcon, SpinnerIcon } from "@chakra-ui/icons";
 import {
   Text,
@@ -31,105 +36,18 @@ type CrosswordUser = {
 };
 
 export default function Projects() {
-  const [input, setInput] = useState("");
   const [error, setError] = useState(false);
-  const [loadingUsers, setLoadingUsers] = useState(false);
-  const [users, setUsers] = useState([]);
-  const [usersWithStats, setUsersWithStats] = useState([]);
-
-  const handleNewCookie = async () => {
-    setError(false);
-    setLoadingUsers(true);
-    try {
-      const data = await fetch("/api/crossword/add-user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ cookie: input }),
-      });
-
-      if (data.status !== 200) {
-        setLoadingUsers(false);
-        setError(true);
-      }
-
-      handleRefresh();
-    } catch (e) {
-      setLoadingUsers(false);
-      setError(true);
-    }
-  };
-
-  const handleRefresh = async () => {
-    setError(false);
-    try {
-      setLoadingUsers(true);
-      const data = await fetch("/api/crossword/refresh", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (data.status !== 200) {
-        setError(true);
-      }
-      window.location.reload();
-    } catch (e) {
-      setError(true);
-    }
-  };
-
-  const handleGetUsers = async () => {
-    setError(false);
-    try {
-      const data = await fetch("/api/crossword/get-users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (data.status !== 200) {
-        setError(true);
-      }
-
-      const json = await data.json();
-      console.log(json);
-    } catch (e) {
-      setError(true);
-    }
-  };
+  const [loadingLeaderboard, setLoadingLeaderboard] = useState(false);
+  const [leaderboard, setLeaderboard] = useState([]);
+  const [leaderboardWithStats, setLeaderboardWithStats] = useState([]);
+  const [showCreateLeaderboard, setShowCreateLeaderboard] = useState(false);
 
   useEffect(() => {
-    const handleGetStats = async () => {
+    const getLeaderboards = async () => {
       setError(false);
+      setLoadingLeaderboard(true);
       try {
-        const data = await fetch("/api/crossword/get-stats", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ users: users }),
-        });
-
-        if (data.status !== 200) {
-          setError(true);
-        }
-
-        const json = await data.json();
-        return json["data"];
-      } catch (e) {
-        setError(true);
-      }
-    };
-
-    const getUsers = async () => {
-      setError(false);
-      setLoadingUsers(true);
-      try {
-        const data = await fetch("/api/crossword/get-users", {
+        const data = await fetch("/api/crossword/get-leaderboards", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -141,42 +59,16 @@ export default function Projects() {
         }
 
         const json = await data.json();
-        const crosswordUsers = json["users"];
-        const stats = await handleGetStats();
-
-        const usersWithStats = crosswordUsers.map(
-          (user: { user_id: string; username: string }) => {
-            const item = stats.find(
-              (stat: { id: string }) => stat.id === user.user_id
-            );
-
-            return {
-              ...user,
-              ...item,
-            };
-          }
-        );
-
-        // sort by first place finishes
-        usersWithStats.sort((a: CrosswordUser, b: CrosswordUser) => {
-          if (a.first_place_finishes > b.first_place_finishes) {
-            return -1;
-          } else if (a.first_place_finishes < b.first_place_finishes) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-
-        setUsersWithStats(usersWithStats);
+        const leaderboardsResponse = json["leaderboards"];
+        setLeaderboard(leaderboardsResponse);
       } catch (e) {
         setError(true);
       }
-      setLoadingUsers(false);
+      setLoadingLeaderboard(false);
     };
 
-    getUsers();
-  }, [users]);
+    getLeaderboards();
+  }, []);
 
   return (
     <VStack spacing="20px">
@@ -207,78 +99,73 @@ export default function Projects() {
           how to get your new york times cookie
         </Link>
       </Text>
-      <Text fontWeight="bold">Enter your NYT Cookie</Text>
-      <Flex w="100%">
-        <Input
-          placeholder="2E4eY0SzN9G6HQTSdAp..."
-          borderRadius="none"
-          onChange={(e) => setInput(e.target.value)}
-          value={input}
-          w="100%"
-        />
-        <Button borderRadius="none" onClick={handleNewCookie}>
-          Submit
-        </Button>
-      </Flex>
-      <Box>
-        <Button borderRadius="none" onClick={handleRefresh}>
-          Refresh data
-          <SpinnerIcon ml="2" />
-        </Button>
-      </Box>
-      {error && (
-        <Text color="red.500">
-          Something went wrong! Please think, come up with a solution, and then
-          try again
-        </Text>
-      )}
+
+      <Text>
+        To join a leaderboard, go to the leaderboard page and enter your NYT
+        cookie.
+      </Text>
 
       <Box maxW="100%" overflowX="hidden">
-        {loadingUsers ? (
+        {loadingLeaderboard ? (
           <Spinner />
         ) : (
           <Box maxW="100%" overflowX="hidden">
             <Table>
               <Thead maxW="100%" overflowX="hidden">
                 <Tr maxW="100%" overflowX="hidden">
-                  <Th>name</Th>
-                  <Th>1st place</Th>
-                  <Th>2nd place</Th>
-                  <Th>total solves</Th>
+                  <Th>leaderboard</Th>
+                  <Th>num. players</Th>
+                  <Th>Password?</Th>
                 </Tr>
               </Thead>
               <Tbody>
-                {usersWithStats.map((user: CrosswordUser, index) => (
-                  <Tr key={index}>
-                    <Td>
-                      <Link
-                        className="md-link"
-                        href={"/projects/crossword/user/" + user.id}
-                      >
-                        {user.username}
-                      </Link>
-                    </Td>
-                    <Td>{user.first_place_finishes}🏅</Td>
-                    <Td>{user.second_place_finishes}🥈</Td>
-                    <Td>{user.total_solves_attempted}</Td>
-                  </Tr>
-                ))}
+                {leaderboard.map(
+                  (leaderboardItem: LeaderboardItemResponse, index) => (
+                    <Tr key={index}>
+                      <Td>
+                        <Link
+                          className="md-link"
+                          href={
+                            "/projects/crossword/leaderboard/" +
+                            leaderboardItem.id
+                          }
+                        >
+                          {leaderboardItem.name}
+                        </Link>
+                      </Td>
+                      <Td>{leaderboardItem.user_count}</Td>
+                      <Td>
+                        {leaderboardItem.is_password_protected ? "🔒" : "No"}
+                      </Td>
+                    </Tr>
+                  )
+                )}
               </Tbody>
             </Table>
           </Box>
         )}
       </Box>
-      <Heading size="md">The code</Heading>
-      <Text>
-        Unfortunately it&apos;s not a neat little package, it&apos;s a part of
-        this website&apos;s codebase, which you can find on{" "}
-        <Link
-          className="md-link"
-          href="https://github.com/sinakhalili/sinakhalili.com"
-        >
-          github
-        </Link>
-      </Text>
+      <Button onClick={() => setShowCreateLeaderboard(!showCreateLeaderboard)}>
+        Create new leaderboard
+      </Button>
+      {showCreateLeaderboard && <CrosswordCreateRoom />}
+
+      <Box>
+        <Heading size="md">See Also</Heading>
+        <Box>
+          <Link
+            className="md-link"
+            href="https://github.com/sinakhalili/sinakhalili.com"
+          >
+            The code on github
+          </Link>
+          <Text>
+            Unfortunately it&apos;s not a neat little package, it&apos;s a part
+            of this website&apos;s codebase, but if you search for crossword in
+            the repo you&apos;ll find it.
+          </Text>
+        </Box>
+      </Box>
     </VStack>
   );
 }

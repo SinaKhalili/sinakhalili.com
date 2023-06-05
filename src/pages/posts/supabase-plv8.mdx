@@ -23,6 +23,36 @@ Good question. We can also run arbitrary `sql` in the javascript!
 I told you it was cheesy.
 </PopCitation>
 
+TLDR, just put the SQL you want in this template:
+```sql
+CREATE OR REPLACE FUNCTION public.foo_bar()
+ RETURNS json
+ LANGUAGE plv8
+AS $function$
+
+
+  var num_affected = plv8.execute(`
+
+-- BEGIN SQL
+
+-- SQL GOES HERE
+
+-- END SQL
+
+`);
+
+  // Convert BigInt values to integers
+  num_affected.forEach(row => {
+    row.user_count = parseInt(row.user_count);
+  });
+
+  return JSON.stringify(num_affected);
+
+
+$function$
+;
+```
+
 So let's say you have a table for storing you and your friends
 crossword scores. There's a table with a puzzle_id, a user_id, and a
 score. You whisper this request into the LLM and it spits out:

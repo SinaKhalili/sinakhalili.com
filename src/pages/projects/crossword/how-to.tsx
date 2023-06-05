@@ -1,6 +1,7 @@
 import { PopCitation } from "@/components/PopCitation";
 import {
   Box,
+  Button,
   Heading,
   Image,
   Kbd,
@@ -11,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
+import ReactPlayer from "react-player";
 
 export default function HowTo() {
   return (
@@ -53,6 +55,7 @@ export default function HowTo() {
               "document.cookie.split('; ').find(r => r.startsWith('NYT-S')).split('=')[1]"
             }
           </Box>
+          <Image my={2} src="/nyt_instruction.png" width="100%" alt="console" />
         </ListItem>
         <ListItem>
           Press <Kbd m={1}>Enter</Kbd> to run the code. This will output a long
@@ -62,18 +65,20 @@ export default function HowTo() {
           </Text>
         </ListItem>
         <ListItem>
-          Copy that string of letters and numbers. That is your New🍪🍪 York🍪🍪
-          Times crossword cookie!!!! 🎉🍪🍪🍪🍪
+          Copy that string of letters and numbers. This is your New York Times
+          crossword cookie!!!! 🎉🍪🍪🍪🍪
         </ListItem>
       </OrderedList>
       <Text>
-        That&apos;s it! Now you can enter that cookie on
+        That&apos;s it! Now you can enter that cookie on any leaderboard on
         <Link href="/projects/crossword" className="md-link">
           {" "}
-          the crossword page
+          the crossword leaderboards page
         </Link>{" "}
         to get your mini stats
       </Text>
+      <Text>Video instruction</Text>
+      <ReactPlayer url="/how-to.mp4" controls={true} width="100%" />
     </VStack>
   );
 }

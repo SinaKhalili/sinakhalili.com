@@ -1,5 +1,15 @@
 export const projects = [
   {
+    name: "wikistar",
+    description: `
+    A chrome extensions that lets you star wikipedia pages
+    like github repos.
+    `,
+    repo: "https://github.com/sinakhalili/wikistar",
+    imageSrc: "/projects/wikistar.png",
+    imageAlt: "wikistar",
+  },
+  {
     name: "mini crossword stats",
     description: `
     A page that displays statistics for the New York Times mini crossword.

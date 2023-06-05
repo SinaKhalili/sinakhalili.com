@@ -33,3 +33,17 @@ export type SolveInfo = {
   opened_at: number;
   board: Board;
 };
+
+export type LeaderboardItem = {
+  created_at: string;
+  id: number;
+  name: string;
+  is_password_protected: boolean;
+};
+
+export type LeaderboardItemResponse = {
+  user_count: number;
+  id: number;
+  name: string;
+  is_password_protected: boolean;
+};

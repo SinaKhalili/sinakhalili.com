@@ -1,5 +1,6 @@
 import { Puzzle } from "@/lib/crossword/types";
 import { supabaseAdmin } from "./server";
+import bcrypt from "bcrypt";
 
 export const addOrRefreshCrosswordUser = async (
   cookie: string,
@@ -115,6 +116,22 @@ export const getCrosswordUsers = async () => {
   });
 };
 
+export const getCrosswordUsersForLeaderboard = async (
+  leaderboard_id: number
+) => {
+  console.log(leaderboard_id);
+  const { data, error } = await supabaseAdmin
+    .from("crosswordleaderboards_users")
+    .select("user_id")
+    .eq("leaderboard_id", leaderboard_id);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
 export const getSolves = async (user_id: string) => {
   const { data, error } = await supabaseAdmin
     .from("crosswordsolves")
@@ -181,4 +198,172 @@ export const getStats = async () => {
   }
 
   return data;
+};
+
+export const getStatsForRoom = async (leaderboard_id: string) => {
+  const { data, error } = await supabaseAdmin.rpc("get_stats_for_room", {
+    leaderboard_id,
+  });
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const getMonthlyLeaderboardForRoom = async (
+  leaderboard_id: string,
+  day: string
+) => {
+  const { data, error } = await supabaseAdmin.rpc("get_leaderboard_for_month", {
+    leaderboard_id,
+    day,
+  });
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const getLeaderboard = async (leaderboard_id: string) => {
+  const { data, error } = await supabaseAdmin
+    .from("crosswordleaderboards")
+    .select("*")
+    .eq("id", parseInt(leaderboard_id))
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const getLeaderboards = async () => {
+  const { data, error } = await supabaseAdmin.rpc(
+    "get_leaderboards_with_count"
+  );
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const createLeaderboard = async (name: string, password: string) => {
+  let hashedPassword = null;
+  if (password) {
+    hashedPassword = await bcrypt.hash(password, 10);
+  }
+
+  const dataToInsert = password
+    ? [{ name, password: hashedPassword }]
+    : [{ name }];
+
+  const { data, error } = await supabaseAdmin
+    .from("crosswordleaderboards")
+    .insert(dataToInsert)
+    .select()
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const checkIfLeaderboardHasPassword = async (leaderboard_id: number) => {
+  const { data, error } = await supabaseAdmin
+    .from("crosswordleaderboards")
+    .select("password")
+    .eq("id", leaderboard_id)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data.password ? true : false;
+};
+
+export const addUserToLeaderboard = async (
+  user_id: number,
+  leaderboard_id: number,
+  password: string
+) => {
+  const is_password_protected_leaderboard = await checkIfLeaderboardHasPassword(
+    leaderboard_id
+  );
+
+  if (is_password_protected_leaderboard && !password) {
+    throw new Error("Password required");
+  }
+
+  if (password) {
+    const res = await checkPasswordForLeaderboard(leaderboard_id, password);
+    if (!res) {
+      throw new Error("Incorrect password");
+    }
+  }
+
+  const { data, error } = await supabaseAdmin
+    .from("crosswordleaderboards_users")
+    .insert([{ user_id, leaderboard_id }]);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const getUsersInLeaderboard = async (
+  leaderboard_id: number
+): Promise<
+  {
+    leaderboard_id: any;
+    user: {
+      id: any;
+      cookie: any;
+    } | null;
+  }[]
+> => {
+  const { data, error } = await supabaseAdmin
+    .from("crosswordleaderboards_users")
+    .select(
+      `
+    leaderboard_id,
+      user:user_id (
+        id,
+        cookie
+      )
+    `
+    )
+    .eq("leaderboard_id", leaderboard_id);
+
+  if (error) {
+    throw error;
+  }
+
+  return data as any;
+};
+
+export const checkPasswordForLeaderboard = async (
+  leaderboard_id: number,
+  password: string
+) => {
+  const { data, error } = await supabaseAdmin
+    .from("crosswordleaderboards")
+    .select("password")
+    .eq("id", leaderboard_id)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return await bcrypt.compare(password, data.password);
 };

@@ -99,6 +99,9 @@ export const getMiniCrosswordData = async (cookie: string) => {
 };
 
 export const getSolveInfo = async (cookie: string, puzzle_ids: number[]) => {
+  if (!cookie) {
+    throw new Error("No cookie provided");
+  }
   const solutionPromises = puzzle_ids.map(async (puzzle_id) => {
     const SOLUTION_ENDPOINT = `${NYT_API_ROOT}/v6/game/${puzzle_id}.json`;
     const resp = await fetch(SOLUTION_ENDPOINT, {
