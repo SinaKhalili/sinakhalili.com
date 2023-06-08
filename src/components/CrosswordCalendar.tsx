@@ -122,7 +122,11 @@ export const CrosswordCalendar = ({ id }: { id: string }) => {
       <Heading>Calendar</Heading>
       <Text>🟠 - sub 1 🟡 - sub 40 🟢 - sub 30</Text>
       <Box>
-        <Box display="flex" flexWrap="wrap">
+        <Box
+          display="flex"
+          flexWrap={["nowrap", "wrap", "wrap", "wrap"]}
+          flexDir={["column", "row", "row", "row"]}
+        >
           {Object.keys(leaderboard).map((solveDate) => (
             <Box
               key={solveDate}
@@ -169,7 +173,9 @@ export const CrosswordCalendar = ({ id }: { id: string }) => {
                 isLoading={loadingLeaderboard}
                 onClick={extendLeaderboard}
                 h="100%"
+                w="100%"
                 borderRadius="10px"
+                py={2}
               >
                 Load more
               </Button>

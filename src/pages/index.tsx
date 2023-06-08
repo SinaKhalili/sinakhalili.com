@@ -79,6 +79,13 @@ export default function Home({ posts }: HomeProps) {
             <Text>
               Welcome to my little website. I hope you enjoy your stay.
             </Text>
+            <Text>
+              Like crosswords? Specifically the New York Times mini crossword?
+              check out my{" "}
+              <Link className="md-link" href="/projects/crossword">
+                crossword leaderboard
+              </Link>
+            </Text>
           </VStack>
           <Image
             src="/computer_dance.gif"
