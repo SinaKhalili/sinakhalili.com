@@ -1,5 +1,10 @@
-import { formatDateToEnglish } from "@/lib/crossword";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import {
+  formatDateToEnglish,
+  formatSecondsToTime,
+  toNytURL,
+} from "@/lib/crossword";
+import { Box, Button, Heading, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface LeaderboardData {
@@ -57,7 +62,6 @@ export const CrosswordCalendar = ({ id }: { id: string }) => {
       setError(false);
       try {
         if (!id) return;
-        // get the day like YYYY-MM-DD
         const date = new Date();
         const year = date.getFullYear();
         const month = date.getMonth() + 1;
@@ -86,9 +90,37 @@ export const CrosswordCalendar = ({ id }: { id: string }) => {
     getMonthlyLeaderboard();
   }, [id]);
 
+  const extendLeaderboard = async () => {
+    setError(false);
+    setLoadingLeaderboard(true);
+    try {
+      const oldestDate =
+        Object.keys(leaderboard)[Object.keys(leaderboard).length - 1];
+      const data = await fetch("/api/crossword/get-monthly-leaderboard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id, day: oldestDate }),
+      });
+      if (data.status !== 200) {
+        setError(true);
+      }
+
+      const json = await data.json();
+      const formatted = formatSolveData(json["data"]);
+      setLeaderboard({ ...leaderboard, ...formatted });
+      setLoadingLeaderboard(false);
+    } catch (e) {
+      console.log(e);
+      setError(true);
+    }
+  };
+
   return (
     <Box w="100%">
       <Heading>Calendar</Heading>
+      <Text>🟠 - sub 1 🟡 - sub 40 🟢 - sub 30</Text>
       <Box>
         <Box display="flex" flexWrap="wrap">
           {Object.keys(leaderboard).map((solveDate) => (
@@ -101,15 +133,48 @@ export const CrosswordCalendar = ({ id }: { id: string }) => {
               borderRadius="10px"
             >
               <Heading size="sm">{formatDateToEnglish(solveDate)}</Heading>
-              {leaderboard[solveDate].map((item) => (
-                <Box key={item.username} paddingY={2}>
-                  <Text>
-                    {item.username} - {item.seconds_spent_solving}
+              {leaderboard[solveDate].map((item, index) => (
+                <Box
+                  display="flex"
+                  flexDir="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  key={item.username}
+                  paddingY={2}
+                >
+                  <Box display="flex">
+                    <Text mr={2} fontWeight="bold" fontFamily="charter">
+                      {index + 1}.
+                    </Text>
+                    <Text>{item.username}</Text>
+                  </Box>
+                  <Text ml={2} fontWeight="bold">
+                    {formatSecondsToTime(item.seconds_spent_solving)}
                   </Text>
                 </Box>
               ))}
+              <Link className="md-link" href={toNytURL(solveDate)}>
+                view puzzle
+              </Link>
             </Box>
           ))}
+          <Box border="1px solid black" m={2} borderRadius="10px">
+            <Box
+              display="flex"
+              height="100%"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Button
+                isLoading={loadingLeaderboard}
+                onClick={extendLeaderboard}
+                h="100%"
+                borderRadius="10px"
+              >
+                Load more
+              </Button>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </Box>

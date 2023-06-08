@@ -8,15 +8,15 @@ interface PostItemProps {
 const PostItem = ({ post }: PostItemProps) => {
   return (
     <Flex
-      direction="row"
-      alignItems="center"
+      direction={{ base: "column", md: "row" }}
+      alignItems={{ base: "flex-start", md: "center" }}
       justifyContent="space-between"
       my={3}
     >
       <Link className="md-link" href={`/posts/${post.slug}`}>
         {post.data.title}
       </Link>
-      <Text fontSize="sm" as="span" mx={1} fontStyle="italic">
+      <Text fontSize="sm" as="span" opacity="0.56" fontStyle="italic">
         {post.data.publishedOn}
       </Text>
     </Flex>

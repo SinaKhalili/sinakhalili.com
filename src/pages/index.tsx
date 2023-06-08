@@ -96,6 +96,7 @@ export default function Home({ posts }: HomeProps) {
             border="1px solid"
             borderColor="gray.200"
             borderRadius="md"
+            w="100%"
           >
             <Text>
               posts{" "}

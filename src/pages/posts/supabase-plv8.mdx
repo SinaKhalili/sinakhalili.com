@@ -13,16 +13,6 @@ So you want to run an arbitrary sql statement in supabase and return
 json? And you don't want to learn that weird plpgsql language? because
 chatGPT can't write decent plpgsql to save it's aritficial life?
 
-Well you're in luck! We simply have to use the `plv8` extension and
-then we can run arbitrary javascript in our sql statements.
-
-> But how does that help us? 
-
-Good question. We can also run arbitrary `sql` in the javascript!
-<PopCitation>
-I told you it was cheesy.
-</PopCitation>
-
 TLDR, just put the SQL you want in this template:
 ```sql
 CREATE OR REPLACE FUNCTION public.foo_bar()
@@ -52,6 +42,13 @@ AS $function$
 $function$
 ;
 ```
+
+We simply have to use the `plv8` extension and
+then we can use javascript in our stored procedures.
+
+
+We can also run `sql` in the javascript!
+To do this we can use the `plv8.execute` method.
 
 So let's say you have a table for storing you and your friends
 crossword scores. There's a table with a puzzle_id, a user_id, and a
@@ -114,7 +111,7 @@ GROUP BY crosswordusers.id;
 And then we just wrap this in the function definition and we're
 done (my syntax highlighting is broken here of course)
 
-```sql
+```javascript
 create extension plv8;
 set check_function_bodies = off;
 
@@ -158,3 +155,48 @@ const { data, error } = await supabaseAdmin.rpc("get_stats");
 ```
 
 And that's it! You can now run arbitrary sql and return json.
+
+If you want to add arguments, you can add them as an array as a
+second argument to the `plv8.execute` call, and just use the `$1`
+style argument passing like so:
+
+```javascript
+CREATE OR REPLACE FUNCTION public.get_leaderboard_for_month(leaderboard_id integer, day text)
+ RETURNS json
+ LANGUAGE plv8
+AS $function$
+{
+  var num_affected = plv8.execute(`
+    SELECT
+      cu.username,
+      cs.seconds_spent_solving,
+      RANK() OVER (PARTITION BY cp.date ORDER BY cs.seconds_spent_solving ASC) AS rank,
+      cp.date AS solve_date
+    FROM
+      crosswordleaderboards cl
+      JOIN crosswordleaderboards_users clu ON cl.id = clu.leaderboard_id
+      JOIN crosswordusers cu ON clu.user_id = cu.id
+      JOIN crosswordsolves cs ON cu.id = cs.user_id
+      JOIN crosswordpuzzles cp ON cs.puzzle_id = cp.id
+    WHERE
+      cl.id = $1
+      AND cp.date BETWEEN DATE($2) - INTERVAL '30 days' AND DATE($2)
+    ORDER BY
+      cp.date DESC, cs.seconds_spent_solving ASC;
+  `, [leaderboard_id, day]);
+  
+  // Serialize JSON with custom replacer function to handle BigInt values
+  return JSON.stringify(num_affected, (_, value) => {
+    if (typeof value === 'bigint') {
+      return value.toString();
+    }
+    return value;
+  });
+}
+$function$
+;
+
+```
+
+Note that in this case, we opted to use the `toString` instead
+of `parseInt` because we want to preserve the BigInt values.

@@ -121,7 +121,12 @@ export function formatDateToEnglish(dateString: string | undefined): string {
   if (!dateString) return "N/A";
   const date = new Date(dateString);
 
-  const options = { month: "long", day: "numeric", year: "numeric" } as any;
+  const options = {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  } as any;
   return date.toLocaleDateString("en-US", options);
 }
 
