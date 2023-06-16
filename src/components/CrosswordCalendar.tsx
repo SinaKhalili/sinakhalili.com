@@ -123,9 +123,12 @@ export const CrosswordCalendar = ({ id }: { id: string }) => {
       <Text>🟠 - sub 1 🟡 - sub 40 🟢 - sub 30</Text>
       <Box>
         <Box
-          display="flex"
-          flexWrap={["nowrap", "wrap", "wrap", "wrap"]}
-          flexDir={["column", "row", "row", "row"]}
+          display="grid"
+          gridTemplateColumns={[
+            "repeat(1, 1fr)",
+            "repeat(2, 1fr)",
+            "repeat(3, 1fr)",
+          ]}
         >
           {Object.keys(leaderboard).map((solveDate) => (
             <Box
@@ -150,7 +153,14 @@ export const CrosswordCalendar = ({ id }: { id: string }) => {
                     <Text mr={2} fontWeight="bold" fontFamily="charter">
                       {index + 1}.
                     </Text>
-                    <Text>{item.username}</Text>
+                    <Text
+                      textOverflow={"ellipsis"}
+                      overflow={"hidden"}
+                      whiteSpace={"nowrap"}
+                      maxWidth="130px"
+                    >
+                      {item.username}
+                    </Text>
                   </Box>
                   <Text ml={2} fontWeight="bold">
                     {formatSecondsToTime(item.seconds_spent_solving)}

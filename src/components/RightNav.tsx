@@ -41,6 +41,7 @@ export const RightNav = () => {
             fontWeight="bold"
             p={3}
             borderRadius="full"
+            marginBottom={3}
           >
             Cool links from around the web
           </Text>
@@ -48,7 +49,7 @@ export const RightNav = () => {
             <Box
               key={index}
               w="100%"
-              my={3}
+              my={1}
               bgColor="whiteAlpha.600"
               p={2}
               borderRadius="10px"

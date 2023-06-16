@@ -1,8 +1,4 @@
-import {
-  getCrosswordUser,
-  getMiniCrosswordData,
-  getSolveInfo,
-} from "@/lib/crossword";
+import { getCrosswordUser, getMiniCrosswordDataNYT } from "@/lib/crossword";
 import {
   addOrRefreshCrosswordUser,
   enhanceSolveInformation,
@@ -13,6 +9,7 @@ import {
   updateSolvesTable,
 } from "@/db/crossword";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getSolveInfoNYT } from "@/lib/crossword/server";
 
 export default async function handler(
   req: NextApiRequest,
@@ -27,20 +24,19 @@ export default async function handler(
 
   try {
     const users = await getUsersInLeaderboard(leaderboard_id);
-    console.log("users", users);
     const first = users[0];
     if (!first.user) return;
-    const data = await getMiniCrosswordData(first.user.cookie);
+    const data = await getMiniCrosswordDataNYT(first.user.cookie);
     await updatePuzzlesTable(data);
 
     try {
       await Promise.all(
         users.map(async (user) => {
           if (!user.user) return;
-          const data = await getMiniCrosswordData(user.user.cookie);
+          const data = await getMiniCrosswordDataNYT(user.user.cookie);
           await updateSolvesTable(user?.user?.id, data);
           const solvesForUser = await getSolves(user.user.id);
-          const solveInformation = await getSolveInfo(
+          const solveInformation = await getSolveInfoNYT(
             user.user.cookie,
             solvesForUser
           );

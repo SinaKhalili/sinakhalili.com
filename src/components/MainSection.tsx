@@ -6,13 +6,12 @@ interface IMainSectionProps {
 
 export const MainSection = ({ children }: IMainSectionProps) => {
   return (
-    <Box flexGrow={1} w="100%" mb={["20px", "20px", "20px", "0px"]}>
+    <Box flexGrow={1} mb={["20px", "20px", "20px", "0px"]}>
       <Flex
         direction="column"
         alignItems="center"
         justifyContent="center"
         h={["auto", "auto", "auto", "100%"]}
-        w="100%"
       >
         <Flex
           direction="column"
@@ -43,7 +42,7 @@ export const MainSection = ({ children }: IMainSectionProps) => {
             fontSize="16px"
             my="20px"
           >
-            <Box>{children}</Box>
+            {children}
           </Box>
         </Flex>
       </Flex>

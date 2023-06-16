@@ -111,7 +111,10 @@ export const ChartComponent = ({
         lineWidth: 2,
         topColor: "rgba(38, 198, 218, 0.05)",
       });
-      newSeries.setData(day.data);
+      const filtered = day.data.filter((d) => {
+        return d.value !== null;
+      });
+      newSeries.setData(filtered);
     });
 
     window.addEventListener("resize", handleResize);

@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { MainSection } from "@/components/MainSection";
 import { RightNav } from "@/components/RightNav";
+import Link from "next/link";
 
 interface ILayoutProps {
   children: React.ReactNode;
@@ -28,14 +29,17 @@ const Layout = ({ children }: ILayoutProps) => {
         <MainSection>{children}</MainSection>
         {isDesktop && <RightNav />}
       </Flex>
-      <Box h="2vh" bgColor="black" overflow="hidden">
+      <Box py="4px" bgColor="black" overflow="hidden">
         <Text
           textAlign="center"
           fontFamily="monospace"
           fontSize="xs"
           color="white"
         >
-          beep boop beep boop. thus is the procedure.
+          beep boop beep boop. thus is{" "}
+          <Link href="https://teaching.csse.uwa.edu.au/units/CITS1001/extension/ancient-babylonian-algorithms.pdf">
+            the procedure.
+          </Link>
         </Text>
       </Box>
     </>

@@ -12,10 +12,12 @@ import {
   toNytURL,
 } from "@/lib/crossword";
 import { Board, SolveInfo } from "@/lib/crossword/types";
+import { ArrowLeftIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Flex,
+  Grid,
   Heading,
   Spinner,
   Table,
@@ -121,20 +123,40 @@ export default function CrosswordUserPage() {
 
   return (
     <Box>
+      <Head>
+        <meta
+          name="description"
+          content="NYT Mini Crossword Stats With Friends"
+        />
+        <meta property="og:image" content="/crosswordog.png" />
+      </Head>
       <Box mx={[7, 3, 1, 0]}>
-        <Box m={2}>
-          <Heading>{userInfo["username"]}</Heading>
-          <Text my={5}>
-            Joined the sinakhalili.com leaderboards on{" "}
-            {formatDateToEnglish(userInfo["created_at"].split("T")[0])}{" "}
-            <Link className="md-link" href={`/projects/crossword`}>
-              [back]
+        <Flex
+          w="100%"
+          alignItems="center"
+          justifyItems="center"
+          justifyContent="space-between"
+        >
+          <Text fontSize="sm" m={3}>
+            <Link className="md-link" href="/projects/crossword">
+              <ArrowLeftIcon />
             </Link>
           </Text>
-        </Box>
+          <Heading>{userInfo["username"]}</Heading>
+          <Text></Text>
+        </Flex>
+        <Text my={5}>
+          Joined the sinakhalili.com leaderboards on{" "}
+          {formatDateToEnglish(userInfo["created_at"].split("T")[0])}{" "}
+        </Text>
         <Box my={5}>
-          <Heading size="md">General</Heading>
-          <Flex wrap="wrap">
+          <Heading marginBottom="8px" marginTop="35px" size="md">
+            General
+          </Heading>
+          <Grid
+            templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]}
+            gridGap="12px"
+          >
             <CrosswordStatCard
               solveInfo={getSorted(solveInfo)[0]}
               text="Best time"
@@ -151,9 +173,14 @@ export default function CrosswordUserPage() {
               }
               text="Median time"
             />
-          </Flex>
-          <Heading size="md">Best by Day</Heading>
-          <Flex wrap="wrap">
+          </Grid>
+          <Heading marginBottom="8px" marginTop="35px" size="md">
+            Best by Day
+          </Heading>
+          <Grid
+            templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]}
+            gridGap="12px"
+          >
             {[
               "Monday",
               "Tuesday",
@@ -169,9 +196,14 @@ export default function CrosswordUserPage() {
                 text={`Best ${day}`}
               />
             ))}
-          </Flex>
-          <Heading size="md">Worst by Day</Heading>
-          <Flex wrap="wrap">
+          </Grid>
+          <Heading marginBottom="8px" marginTop="35px" size="md">
+            Worst by Day
+          </Heading>
+          <Grid
+            templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]}
+            gridGap="12px"
+          >
             {[
               "Monday",
               "Tuesday",
@@ -187,9 +219,14 @@ export default function CrosswordUserPage() {
                 text={`Worst ${day}`}
               />
             ))}
-          </Flex>
-          <Heading size="md">Median by Day</Heading>
-          <Flex wrap="wrap">
+          </Grid>
+          <Heading marginBottom="8px" marginTop="35px" size="md">
+            Median by Day
+          </Heading>
+          <Grid
+            templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]}
+            gridGap="12px"
+          >
             {[
               "Monday",
               "Tuesday",
@@ -209,7 +246,7 @@ export default function CrosswordUserPage() {
                 text={`Median ${day}`}
               />
             ))}
-          </Flex>
+          </Grid>
           <ChartCrosswordStats solveInfo={solveInfo} />
           <ChartCrosswordStats2 solveInfo={solveInfo} />
         </Box>
@@ -234,7 +271,7 @@ export default function CrosswordUserPage() {
         </Flex>
         <Text>🟠 - sub 1 🟡 - sub 40 🟢 - sub 30</Text>
       </Box>
-      <Box overflowX="scroll">
+      <Box maxW="calc(100vw - 2.5rem)" overflowX="auto">
         <Table variant="simple" colorScheme="teal">
           <Thead>
             <Tr>

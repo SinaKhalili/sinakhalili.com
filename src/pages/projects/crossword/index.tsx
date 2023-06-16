@@ -71,101 +71,110 @@ export default function Projects() {
   }, []);
 
   return (
-    <VStack spacing="20px">
+    <>
       <Head>
         <title>Mini Crossword</title>
+        <meta
+          name="description"
+          content="NYT Mini Crossword Stats With Friends"
+        />
+        <meta property="og:image" content="/crosswordog.png" />
       </Head>
-      <Heading>~ Mini Crossword Stats With Friends ~</Heading>
-      <Flex>
-        <Text>Now we can see how we stack up historically!</Text>
-        <PopCitation>
-          See also NYT api reversing on{" "}
-          <Link
-            className="md-link"
-            href="https://observablehq.com/@observablehq/nyt-minis"
-          >
-            observable
-          </Link>{" "}
-          and{" "}
-          <Link className="md-link" href="https://xwstats.com/stats">
-            xwstats
-          </Link>{" "}
-          for big crossword stats.
-        </PopCitation>
-      </Flex>
-      <Text>
-        For instructions on how to get your NYT cookie, see{" "}
-        <Link className="md-link" href="/projects/crossword/how-to">
-          how to get your new york times cookie
-        </Link>
-      </Text>
-
-      <Text>
-        To join a leaderboard, go to the leaderboard page and enter your NYT
-        cookie.
-      </Text>
-
-      <Box maxW="100%" overflowX="hidden">
-        {loadingLeaderboard ? (
-          <Spinner />
-        ) : (
-          <Box maxW="100%" overflowX="hidden">
-            <Table>
-              <Thead maxW="100%" overflowX="hidden">
-                <Tr maxW="100%" overflowX="hidden">
-                  <Th>leaderboard</Th>
-                  <Th>num. players</Th>
-                  <Th>Password?</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {leaderboard.map(
-                  (leaderboardItem: LeaderboardItemResponse, index) => (
-                    <Tr key={index}>
-                      <Td>
-                        <Link
-                          className="md-link"
-                          href={
-                            "/projects/crossword/leaderboard/" +
-                            leaderboardItem.id
-                          }
-                        >
-                          {leaderboardItem.name}
-                        </Link>
-                      </Td>
-                      <Td>{leaderboardItem.user_count}</Td>
-                      <Td>
-                        {leaderboardItem.is_password_protected ? "🔒" : "No"}
-                      </Td>
-                    </Tr>
-                  )
-                )}
-              </Tbody>
-            </Table>
-          </Box>
-        )}
-      </Box>
-      <Button onClick={() => setShowCreateLeaderboard(!showCreateLeaderboard)}>
-        Create new leaderboard
-      </Button>
-      {showCreateLeaderboard && <CrosswordCreateRoom />}
-
-      <Box>
-        <Heading size="md">See Also</Heading>
-        <Box>
-          <Link
-            className="md-link"
-            href="https://github.com/sinakhalili/sinakhalili.com"
-          >
-            The code on github
+      <VStack spacing="20px">
+        <Heading>~ Mini Crossword Stats With Friends ~</Heading>
+        <Flex>
+          <Text>Now we can see how we stack up historically!</Text>
+          <PopCitation>
+            See also NYT api reversing on{" "}
+            <Link
+              className="md-link"
+              href="https://observablehq.com/@observablehq/nyt-minis"
+            >
+              observable
+            </Link>{" "}
+            and{" "}
+            <Link className="md-link" href="https://xwstats.com/stats">
+              xwstats
+            </Link>{" "}
+            for big crossword stats.
+          </PopCitation>
+        </Flex>
+        <Text>
+          For instructions on how to get your NYT cookie, see{" "}
+          <Link className="md-link" href="/projects/crossword/how-to">
+            how to get your new york times cookie
           </Link>
-          <Text>
-            Unfortunately it&apos;s not a neat little package, it&apos;s a part
-            of this website&apos;s codebase, but if you search for crossword in
-            the repo you&apos;ll find it.
-          </Text>
+        </Text>
+
+        <Text>
+          To join a leaderboard, go to the leaderboard page and enter your NYT
+          cookie.
+        </Text>
+
+        <Box maxW="100%" overflowX="hidden">
+          {loadingLeaderboard ? (
+            <Spinner />
+          ) : (
+            <Box maxW="calc(100vw - 2.5rem)" overflowX="auto">
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th>leaderboard</Th>
+                    <Th>num. players</Th>
+                    <Th>Password?</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {leaderboard.map(
+                    (leaderboardItem: LeaderboardItemResponse, index) => (
+                      <Tr key={index}>
+                        <Td>
+                          <Link
+                            className="md-link"
+                            href={
+                              "/projects/crossword/leaderboard/" +
+                              leaderboardItem.id
+                            }
+                          >
+                            {leaderboardItem.name}
+                          </Link>
+                        </Td>
+                        <Td>{leaderboardItem.user_count}</Td>
+                        <Td>
+                          {leaderboardItem.is_password_protected ? "🔒" : "No"}
+                        </Td>
+                      </Tr>
+                    )
+                  )}
+                </Tbody>
+              </Table>
+            </Box>
+          )}
         </Box>
-      </Box>
-    </VStack>
+        <Button
+          onClick={() => setShowCreateLeaderboard(!showCreateLeaderboard)}
+        >
+          Create new leaderboard
+        </Button>
+        {showCreateLeaderboard && <CrosswordCreateRoom />}
+
+        <Box>
+          <Heading size="md">See Also</Heading>
+          <Box>
+            <Link
+              className="md-link"
+              href="https://github.com/sinakhalili/sinakhalili.com"
+            >
+              The code on github
+            </Link>
+            <Text>
+              Unfortunately it&apos;s not a neat little package, it&apos;s a
+              part of this website&apos;s codebase, but if you search for
+              crossword in the repo you&apos;ll find it.
+            </Text>
+          </Box>
+        </Box>
+      </VStack>
+    </>
   );
 }

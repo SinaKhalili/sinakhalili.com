@@ -44,4 +44,18 @@ export const allQuotes: IAllQuotes = {
     As beautiful as the chance encounter of a sewing machine and an umbrella on
     an operating table.`,
   },
+  FilmMadeThreeTiems: {
+    author: "Robert Bresson (Maybe, but probably not)",
+    href: "https://english.stackexchange.com/questions/530511/who-originally-said-a-film-is-made-written-three-times",
+    children: `
+     I've discovered that a film is born three times, once when it is written. Again when it is directed. And once more when it is edited.
+    `,
+  },
+  MontaigneQuotes: {
+    author: "Michel de Montaigne",
+    href: "https://books.google.ca/books?id=L-Qs6z6CWJkC&printsec=titlepage&redir_esc=y#v=onepage&q&f=false",
+    children: `
+      I quote others only in order the better to express myself.
+    `,
+  },
 };

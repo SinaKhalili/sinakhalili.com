@@ -81,7 +81,12 @@ export const ChartComponent = ({ data }: { data: TradingChartData[] }) => {
       lineColor: "rgba(76, 175, 80, 1)",
       lineWidth: 2,
     });
-    newSeries.setData(data);
+
+    const filtered = data.filter((d) => {
+      return d.value !== null;
+    });
+
+    newSeries.setData(filtered);
 
     window.addEventListener("resize", handleResize);
 
@@ -116,7 +121,9 @@ export const ChartCrosswordStats = ({
 
   return (
     <>
-      <Heading size="md">Daily performance over time</Heading>
+      <Heading size="md" marginTop="35px">
+        Daily performance over time
+      </Heading>
       <Flex>
         <Button
           borderRadius="none"

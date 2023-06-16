@@ -99,6 +99,20 @@ export const getCrosswordUser = async (user_id: string) => {
   return data;
 };
 
+export const getCrosswordUserFromCookie = async (cookie: string) => {
+  const { data, error } = await supabaseAdmin
+    .from("crosswordusers")
+    .select("*")
+    .eq("cookie", cookie)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
 export const getCrosswordUsers = async () => {
   const { data, error } = await supabaseAdmin
     .from("crosswordusers")

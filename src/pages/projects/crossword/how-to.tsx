@@ -50,7 +50,7 @@ export default function HowTo() {
         </ListItem>
         <ListItem>
           In the console&apos;s input section, enter the following code:
-          <Box overflowX="scroll" p={2} bg="gray.100" fontFamily="monospace">
+          <Box overflowX="auto" p={2} bg="gray.100" fontFamily="monospace">
             {
               "document.cookie.split('; ').find(r => r.startsWith('NYT-S')).split('=')[1]"
             }

@@ -9,7 +9,11 @@ export default function Document() {
           href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github-dark.min.css"
         />
       </Head>
-      <body>
+      <body
+        style={{
+          overscrollBehavior: "none",
+        }}
+      >
         <Main />
         <NextScript />
       </body>

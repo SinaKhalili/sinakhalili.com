@@ -15,7 +15,12 @@ export const CrosswordStatCard = ({
   text,
 }: ICrosswordStatCardProps) => {
   return (
-    <Box m={6} boxShadow="md" borderRadius={5} w="fit-content" p={5}>
+    <Box
+      // omni directional box shadow
+      border="1px solid #c7c5c5"
+      borderRadius={5}
+      p={5}
+    >
       {text}{" "}
       <Text fontSize="2xl">
         {formatSecondsToTime(solveInfo?.seconds_spent_solving)}

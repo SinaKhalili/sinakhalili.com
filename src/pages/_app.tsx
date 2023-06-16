@@ -2,7 +2,7 @@ import MDXComponents from "@/components/MDXComponents";
 import Layout from "@/layouts/Layout";
 import { MDXProvider } from "@mdx-js/react";
 import type { AppProps } from "next/app";
-import { ChakraProvider, ScaleFade } from "@chakra-ui/react";
+import { Box, ChakraProvider, ScaleFade } from "@chakra-ui/react";
 import { theme } from "@/theme";
 import "@/styles/links.css";
 import { PrinterPrint } from "@/components/Printer";

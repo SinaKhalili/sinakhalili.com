@@ -6,6 +6,7 @@ import { formatDateToEnglish } from "@/lib/crossword";
 import {
   ArrowLeftIcon,
   ArrowUpIcon,
+  CalendarIcon,
   CheckIcon,
   SpinnerIcon,
 } from "@chakra-ui/icons";
@@ -184,12 +185,21 @@ export default function Projects() {
     getLeaderboardInfo();
   }, [id]);
 
+  const title = `Mini Crossword ${
+    leaderboardInfo.name ? leaderboardInfo.name : ""
+  }`;
+
   return (
     <VStack spacing="20px">
       <Head>
-        <title>
-          Mini Crossword {leaderboardInfo.name ? leaderboardInfo.name : ""}
-        </title>
+        <title>{title}</title>
+        <meta
+          property="og:title"
+          content={`Come join the ${
+            leaderboardInfo.name ? leaderboardInfo.name : ""
+          } Mini Crossword Leaderboard!`}
+        />
+        <meta property="og:image" content="/crosswordog.png" />
       </Head>
       <Text></Text>
       <Flex
@@ -249,8 +259,8 @@ export default function Projects() {
 
       <Box>
         <Button borderRadius="none" onClick={handleRefresh}>
-          Refresh data
-          <SpinnerIcon ml="2" />
+          Sync data
+          <CalendarIcon ml={3} />
         </Button>
       </Box>
       {error && (
@@ -264,14 +274,14 @@ export default function Projects() {
         {loadingUsers ? (
           <Spinner />
         ) : (
-          <Box maxW="100%" overflowX="hidden">
+          <Box maxW="calc(100vw - 2.5rem)" overflowX="auto">
             <Table>
-              <Thead maxW="100%" overflowX="hidden">
-                <Tr maxW="100%" overflowX="hidden">
+              <Thead>
+                <Tr>
                   <Th>name</Th>
-                  <Th>1st place</Th>
-                  <Th>2nd place</Th>
-                  <Th>total solves</Th>
+                  <Th>1st</Th>
+                  <Th>2nd</Th>
+                  <Th>solves</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -295,8 +305,13 @@ export default function Projects() {
           </Box>
         )}
       </Box>
-      <Box maxW="100%" overflowX="hidden">
-        <Heading size="md">Historical leaderboards</Heading>
+      <Box w="100%">
+        <Heading size="md">
+          Historical leaderboards
+          <PopCitation>
+            If the data is out of date, hit the {'"Sync data"'} button above!
+          </PopCitation>
+        </Heading>
         {id && <CrosswordCalendar id={id as string} />}
       </Box>
       <Box>

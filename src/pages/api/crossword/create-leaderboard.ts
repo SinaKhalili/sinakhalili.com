@@ -1,4 +1,4 @@
-import { getCrosswordUser, getMiniCrosswordData } from "@/lib/crossword";
+import { getCrosswordUser, getMiniCrosswordDataNYT } from "@/lib/crossword";
 import {
   addOrRefreshCrosswordUser,
   addUserToLeaderboard,
@@ -21,7 +21,7 @@ export default async function handler(
     const user = await getCrosswordUser(cookie);
     const board = await createLeaderboard(leaderboard_name, password);
     await addOrRefreshCrosswordUser(cookie, user.name, user.userID);
-    await getMiniCrosswordData(cookie);
+    await getMiniCrosswordDataNYT(cookie);
     await addUserToLeaderboard(user.userID, board.id, password);
 
     res.status(200).json({ user: user });

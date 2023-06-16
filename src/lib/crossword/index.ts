@@ -1,7 +1,8 @@
+import { getSolves } from "@/db/crossword";
 import { SolveInfo } from "./types";
 
-const NYT_API_ROOT = "https://nyt-games-prd.appspot.com/svc/crosswords";
-const LEADERBOARD_URL = `${NYT_API_ROOT}/v6/leaderboard/mini.json`;
+export const NYT_API_ROOT = "https://nyt-games-prd.appspot.com/svc/crosswords";
+export const LEADERBOARD_URL = `${NYT_API_ROOT}/v6/leaderboard/mini.json`;
 
 export const getCrosswordUser = async (cookie: string) => {
   cookie = cookie.replace(/^"(.*)"$/, "$1");
@@ -59,7 +60,7 @@ const getQuarters = () => {
   return quarters;
 };
 
-export const getHistoricalMiniCrosswordData = async (
+export const getHistoricalMiniCrosswordDataNYT = async (
   cookie: string,
   begin_date: Date,
   end_date: Date
@@ -79,14 +80,14 @@ export const getHistoricalMiniCrosswordData = async (
   return data;
 };
 
-export const getMiniCrosswordData = async (cookie: string) => {
+export const getMiniCrosswordDataNYT = async (cookie: string) => {
   const quarters = getQuarters();
   let allData: any[] = [];
 
   await Promise.all(
     quarters.map(async (quarter) => {
       const [begin_date, end_date] = quarter;
-      const data = await getHistoricalMiniCrosswordData(
+      const data = await getHistoricalMiniCrosswordDataNYT(
         cookie,
         begin_date,
         end_date
@@ -96,25 +97,6 @@ export const getMiniCrosswordData = async (cookie: string) => {
   );
 
   return allData;
-};
-
-export const getSolveInfo = async (cookie: string, puzzle_ids: number[]) => {
-  if (!cookie) {
-    throw new Error("No cookie provided");
-  }
-  const solutionPromises = puzzle_ids.map(async (puzzle_id) => {
-    const SOLUTION_ENDPOINT = `${NYT_API_ROOT}/v6/game/${puzzle_id}.json`;
-    const resp = await fetch(SOLUTION_ENDPOINT, {
-      method: "GET",
-      headers: {
-        Cookie: `NYT-S=${cookie}`,
-      },
-      credentials: "include",
-    });
-    return resp.json();
-  });
-
-  return await Promise.all(solutionPromises);
 };
 
 export function formatDateToEnglish(dateString: string | undefined): string {
@@ -132,12 +114,12 @@ export function formatDateToEnglish(dateString: string | undefined): string {
 
 export function getWeekdayName(dateString: string): string {
   const date = new Date(dateString);
-  const options = { weekday: "long" } as any;
+  const options = { weekday: "long", timeZone: "UTC" } as any;
   return date.toLocaleDateString("en-US", options);
 }
 
 export function formatSecondsToTime(seconds: number | undefined): string {
-  if (!seconds) return "N/A";
+  if (!seconds) return "...";
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
   const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
@@ -145,9 +127,9 @@ export function formatSecondsToTime(seconds: number | undefined): string {
     remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
 
   if (minutes < 60) {
-    return `${formattedMinutes}:${formattedSeconds} ${getEmojiForTime(
+    return `${getEmojiForTime(
       seconds
-    )}`;
+    )} ${formattedMinutes}:${formattedSeconds}`;
   } else {
     const hours = Math.floor(minutes / 60);
     const formattedHours = hours < 10 ? `0${hours}` : `${hours}`;
@@ -179,7 +161,7 @@ export function getSorted(
   day: string | null = null
 ): SolveInfo[] {
   if (!solveInfo) return [];
-
+  solveInfo = solveInfo.filter((info) => info.seconds_spent_solving !== null);
   let filtered = solveInfo;
   if (day) {
     filtered = [...solveInfo].filter((info) => {
@@ -188,7 +170,7 @@ export function getSorted(
       return (
         day.toLowerCase() ===
         puzzleDate
-          .toLocaleDateString("en-US", { weekday: "long" })
+          .toLocaleDateString("en-US", { weekday: "long", timeZone: "UTC" })
           .toLowerCase()
       );
     });
