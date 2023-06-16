@@ -79,10 +79,10 @@ const leftNavData: INavItem[] = [
     title: "about",
     href: "/about",
   },
-  {
-    title: "my stack",
-    href: "/stack",
-  },
+  // {
+  //   title: "my stack",
+  //   href: "/stack",
+  // },
 ];
 
 export const LeftNav = () => {

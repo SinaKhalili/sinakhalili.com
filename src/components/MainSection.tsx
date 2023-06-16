@@ -23,6 +23,7 @@ export const MainSection = ({ children }: IMainSectionProps) => {
           px={[5, 5, 5, 2]}
           shadow="lg"
           overflowY={["auto", "auto", "auto", "scroll"]}
+          overflowX="hidden"
           css={{
             "&::-webkit-scrollbar": {
               width: "4px",
@@ -37,10 +38,11 @@ export const MainSection = ({ children }: IMainSectionProps) => {
           }}
         >
           <Box
-            w={["auto", "auto", "75ch"]}
+            w={["95vw", "95vw", "75ch"]}
             minH={["100vh", "100vh", "100vh", "auto"]}
             fontSize="16px"
             my="20px"
+            className="shellem"
           >
             {children}
           </Box>

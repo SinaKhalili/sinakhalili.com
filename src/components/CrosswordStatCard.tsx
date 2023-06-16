@@ -20,6 +20,7 @@ export const CrosswordStatCard = ({
       border="1px solid #c7c5c5"
       borderRadius={5}
       p={5}
+      w="100%"
     >
       {text}{" "}
       <Text fontSize="2xl">

@@ -52,16 +52,16 @@ export const FavoriteBooksData: BookData[] = [
     author: "David Foster Wallace",
   },
   {
-    title: "CLOSURE",
-    author: "_why the lucky stiff",
-  },
-  {
-    title: "Why's (Poignant) Guide to Ruby",
+    title: "CLOSURE & the Poignant Guide to Ruby",
     author: "_why the lucky stiff",
   },
   {
     title: "Gödel, Escher, Bach",
     author: "Douglas Hofstadter",
+  },
+  {
+    title: "Hackers & Painters",
+    author: "Paul Graham",
   },
   {
     title: "Harry Potter and the Methods of Rationality",
@@ -77,6 +77,10 @@ export const BooksThatHauntMe: BookData[] = [
   {
     title: "Fanged Noumena",
     author: "Nick Land",
+  },
+  {
+    title: "The Death of Ivan Ilyich",
+    author: "Leo Tolstoy",
   },
   {
     title: "Watchmen",

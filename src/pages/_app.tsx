@@ -6,10 +6,12 @@ import { Box, ChakraProvider, ScaleFade } from "@chakra-ui/react";
 import { theme } from "@/theme";
 import "@/styles/links.css";
 import { PrinterPrint } from "@/components/Printer";
+import CommandBarMain from "@/components/CommandBarMain";
 
 export default function App({ Component, pageProps, router }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
+      <CommandBarMain />
       <MDXProvider components={MDXComponents}>
         <Layout>
           <ScaleFade initialScale={0.97} in={true} key={router.route}>

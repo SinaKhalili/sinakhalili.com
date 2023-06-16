@@ -154,7 +154,11 @@ export default function CrosswordUserPage() {
             General
           </Heading>
           <Grid
-            templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]}
+            templateColumns={[
+              "repeat(1, 1fr)",
+              "repeat(2, 1fr)",
+              "repeat(3, 1fr)",
+            ]}
             gridGap="12px"
           >
             <CrosswordStatCard
@@ -178,7 +182,11 @@ export default function CrosswordUserPage() {
             Best by Day
           </Heading>
           <Grid
-            templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]}
+            templateColumns={[
+              "repeat(1, 1fr)",
+              "repeat(2, 1fr)",
+              "repeat(3, 1fr)",
+            ]}
             gridGap="12px"
           >
             {[
@@ -201,7 +209,11 @@ export default function CrosswordUserPage() {
             Worst by Day
           </Heading>
           <Grid
-            templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]}
+            templateColumns={[
+              "repeat(1, 1fr)",
+              "repeat(2, 1fr)",
+              "repeat(3, 1fr)",
+            ]}
             gridGap="12px"
           >
             {[
@@ -224,7 +236,11 @@ export default function CrosswordUserPage() {
             Median by Day
           </Heading>
           <Grid
-            templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]}
+            templateColumns={[
+              "repeat(1, 1fr)",
+              "repeat(2, 1fr)",
+              "repeat(3, 1fr)",
+            ]}
             gridGap="12px"
           >
             {[

@@ -44,12 +44,7 @@ export default function Home({ posts }: HomeProps) {
         <Flex direction={{ base: "column", md: "row" }}>
           <VStack align="left">
             <Text>
-              Hello friend. As the site name would suggest, I&apos;m Sina
-              <PopCitation>
-                Pronounced like the{" "}
-                <chakra.span fontWeight="bold"> Cena</chakra.span> in John{" "}
-                <chakra.span fontWeight="bold">Cena</chakra.span>.
-              </PopCitation>
+              Hello friend. As the site name would suggest, I&apos;m Sina!
             </Text>
             <Text>
               I&apos;m probably thinking about software, art, film, startups,
@@ -78,6 +73,11 @@ export default function Home({ posts }: HomeProps) {
             </Box>
             <Text>
               Welcome to my little website. I hope you enjoy your stay.
+              <PopCitation>
+                I&apos;ve been adding little easter eggs here and there, so
+                don&apos;t be afraid to click around. For example, Command + K
+                or Ctrl + K 👀
+              </PopCitation>
             </Text>
             <Text>
               Like crosswords? Specifically the New York Times mini crossword?
