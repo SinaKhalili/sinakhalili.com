@@ -39,7 +39,7 @@ const getQuarters = () => {
   const starts = [];
   const today = new Date();
   const startDate = new Date();
-  startDate.setUTCFullYear(today.getUTCFullYear() - 1);
+  startDate.setUTCFullYear(today.getUTCFullYear() - 4); // Change 1: Set the start date 4 years back
 
   let currentQuarterStart = startDate;
   while (currentQuarterStart < today) {
@@ -53,7 +53,7 @@ const getQuarters = () => {
   }
 
   const quarters = starts.map((start) => {
-    const end = new Date(start.getUTCFullYear(), start.getUTCMonth() + 3, 0);
+    const end = new Date(start.getUTCFullYear(), start.getUTCMonth() + 3, 0); // Change 2: Set the end date one day ahead
     return [start, end];
   });
 

@@ -1,13 +1,16 @@
-import { getCrosswordUserFromCookie, getSolves } from "@/db/crossword";
+import {
+  getCachedSolvePuzzleIDs,
+  getCrosswordUserFromCookie,
+  getSolves,
+} from "@/db/crossword";
 import { NYT_API_ROOT } from ".";
 
 export const getSolveInfoNYT = async (cookie: string, puzzle_ids: number[]) => {
-  console.log("getting solve info for", cookie, puzzle_ids.length, "puzzles");
   if (!cookie) {
     throw new Error("No cookie provided");
   }
   const user = await getCrosswordUserFromCookie(cookie);
-  const solveInfoForUser = await getSolves(user.id);
+  const solveInfoForUser = await getCachedSolvePuzzleIDs(user.id);
   const solutionPromises = puzzle_ids.flatMap(async (puzzle_id) => {
     if (solveInfoForUser.find((solveInfo) => solveInfo === puzzle_id)) {
       // If it's cached, don't make a call to NYT
@@ -26,8 +29,6 @@ export const getSolveInfoNYT = async (cookie: string, puzzle_ids: number[]) => {
 
   const ans = await Promise.all(solutionPromises);
   const filtered = ans.filter((x) => x);
-
-  console.log(filtered);
 
   return filtered;
 };

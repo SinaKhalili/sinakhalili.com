@@ -49,7 +49,13 @@ export const getAllCrosswordUsers = async () => {
 };
 
 export const updatePuzzlesTable = async (puzzles: any[]) => {
-  const values = puzzles.map((puzzle) => {
+  const uniquePuzzles = Array.from(
+    new Set(puzzles.map((p) => p.puzzle_id))
+  ).map((id) => {
+    return puzzles.find((p) => p.puzzle_id === id);
+  });
+
+  const values = uniquePuzzles.map((puzzle) => {
     return {
       id: puzzle.puzzle_id,
       date: puzzle.print_date,
@@ -181,6 +187,21 @@ export const getSolvesFull = async (user_id: string) => {
   }
 
   return data;
+};
+
+export const getCachedSolvePuzzleIDs = async (user_id: string) => {
+  const { data, error } = await supabaseAdmin
+    .from("crosswordsolves")
+    .select("puzzle_id")
+    .eq("is_solved", true)
+    .eq("user_id", parseInt(user_id))
+    .not("opened_at", "is", null);
+
+  if (error) {
+    throw error;
+  }
+
+  return data.map((solve) => solve.puzzle_id);
 };
 
 export const enhanceSolveInformation = async (solveInformation: Puzzle[]) => {
