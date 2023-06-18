@@ -7,7 +7,7 @@ const FunkyHome = () => {
   return (
     <Box display="flex" alignItems="center" width="100%">
       <Image mr={6} src="/nod.gif" alt="Nod" maxH="50px" borderRadius="full" />
-      <Text color="white">SINAKHALILI origin</Text>
+      <Text>SINAKHALILI origin</Text>
     </Box>
   );
 };
@@ -16,7 +16,7 @@ const CodePart = () => {
   return (
     <Box display="flex" alignItems="center" width="100%">
       <Image mr={6} src="/hand.gif" alt="Nod" maxH="50px" borderRadius="full" />
-      <Text color="white">the code</Text>
+      <Text>the code</Text>
     </Box>
   );
 };
