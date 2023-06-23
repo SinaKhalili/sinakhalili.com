@@ -7,18 +7,26 @@ import { theme } from "@/theme";
 import "@/styles/links.css";
 import { PrinterPrint } from "@/components/Printer";
 import CommandBarMain from "@/components/CommandBarMain";
+import Script from "next/script";
 
 export default function App({ Component, pageProps, router }: AppProps) {
   return (
-    <ChakraProvider theme={theme}>
-      <CommandBarMain />
-      <MDXProvider components={MDXComponents}>
-        <Layout>
-          <ScaleFade initialScale={0.97} in={true} key={router.route}>
-            <Component {...pageProps} />
-          </ScaleFade>
-        </Layout>
-      </MDXProvider>
-    </ChakraProvider>
+    <>
+      <Script
+        async
+        src="https://analytics.umami.is/script.js"
+        data-website-id="7412b485-05fb-4dd9-a423-8b4254bf4603"
+      />
+      <ChakraProvider theme={theme}>
+        <CommandBarMain />
+        <MDXProvider components={MDXComponents}>
+          <Layout>
+            <ScaleFade initialScale={0.97} in={true} key={router.route}>
+              <Component {...pageProps} />
+            </ScaleFade>
+          </Layout>
+        </MDXProvider>
+      </ChakraProvider>
+    </>
   );
 }
