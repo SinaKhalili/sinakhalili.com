@@ -24,7 +24,7 @@ const coffeeMug: ObjectData = {
   inplaceDescription:
     "A coffee mug sits on the desk. It's intoxicating bouquet of coffee steam wafts into your nostrils.",
   description: `
-A coffee mug sits on the desk. It's full of cold coffee.
+A coffee mug. It's full of coffee.
 `,
 
   interact: {
@@ -61,6 +61,8 @@ This is actually a program that diffs two poems to see if one has
 been modified.
 You're not sure why Cody would be interested in this. Especially since
 there's already websites the let you diff two texts online for free.
+
+And his doesn't work.
 `,
         },
       },
@@ -246,6 +248,11 @@ I’m with you in Rockland
  
 `,
   flags: [ObjectFlags.takeable],
+  interact: {
+    default: `
+    maybe you should read it.
+`,
+  },
 };
 
 const lobster: ObjectData = {
@@ -258,7 +265,7 @@ A lobster scuttles around the backyard.
   flags: [ObjectFlags.takeable],
   interact: {
     default: `
-  You pick up the lobster and put him in your pocket. You feel this is a good idea.
+  There's lobster in your pocket.
 `,
     condition: [
       {
@@ -281,7 +288,7 @@ A lobster scuttles around the backyard.
         user_is_in: LocationNames.backyard,
         result: {
           text: `
-  Thankfully your pocket is big enough.
+  Thankfully your pocket is big enough to hold this lobster.
   `,
           add: [ObjectNames.lobster],
         },
@@ -293,8 +300,7 @@ A lobster scuttles around the backyard.
 const codingRoom: LocationData = {
   name: LocationNames.codingRoom,
   description: `
-You are in Cody's coding room. The room is lit by the glow of two monitors. Cody's coding socks and laptop are on the desk.
-`,
+You are in Cody's coding room. The room is lit by the glow of two monitors.`,
   objects: [laptop],
   exits: {
     west: LocationNames.kitchen,
