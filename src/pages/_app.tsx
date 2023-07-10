@@ -8,6 +8,7 @@ import "@/styles/links.css";
 import { PrinterPrint } from "@/components/Printer";
 import CommandBarMain from "@/components/CommandBarMain";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App({ Component, pageProps, router }: AppProps) {
   return (
@@ -17,6 +18,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
         src="https://analytics.umami.is/script.js"
         data-website-id="7412b485-05fb-4dd9-a423-8b4254bf4603"
       />
+      <Analytics />
       <ChakraProvider theme={theme}>
         <CommandBarMain />
         <MDXProvider components={MDXComponents}>
