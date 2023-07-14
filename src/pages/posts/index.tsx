@@ -26,7 +26,7 @@ export default function Home({ posts }: HomeProps) {
     <>
       <Meta />
       <Heading>Blog posts</Heading>
-      <Box my={5}>
+      <Box minH="100vh">
         <Text>
           Ah yes, blogging. The one thing that&apos;s been on my to-do list for
           as long as I can remember.

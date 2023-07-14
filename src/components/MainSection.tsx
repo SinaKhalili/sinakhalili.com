@@ -6,7 +6,11 @@ interface IMainSectionProps {
 
 export const MainSection = ({ children }: IMainSectionProps) => {
   return (
-    <Box flexGrow={1} mb={["20px", "20px", "20px", "0px"]}>
+    <Box
+      flexGrow={1}
+      mb={["20px", "20px", "20px", "0px"]}
+      // mr={["0px", "0px", "0px", "20px"]}
+    >
       <Flex
         direction="column"
         alignItems="center"
@@ -16,17 +20,17 @@ export const MainSection = ({ children }: IMainSectionProps) => {
         <Flex
           direction="column"
           alignItems="center"
-          h="97%"
+          // h="97%"
           w="100%"
           bgColor="white"
-          borderRadius="10px"
+          // borderRadius="10px"
           px={[5, 5, 5, 2]}
           shadow="lg"
           overflowY={["auto", "auto", "auto", "scroll"]}
           overflowX="hidden"
           css={{
             "&::-webkit-scrollbar": {
-              width: "4px",
+              width: "6px",
             },
             "&::-webkit-scrollbar-track": {
               width: "6px",

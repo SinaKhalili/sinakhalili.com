@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function About() {
   return (
-    <VStack spacing="20px" h={["100vh", "auto"]}>
+    <VStack spacing="20px" h={["100vh", "100vh"]}>
       <Head>
         <title>About</title>
       </Head>

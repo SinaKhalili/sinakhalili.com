@@ -20,16 +20,20 @@ const Layout = ({ children }: ILayoutProps) => {
   return (
     <>
       <Flex
-        h={["auto", "auto", "auto", "98vh"]}
+        h={["auto", "auto", "auto", "100vh"]}
         direction={{ base: "column", lg: "row" }}
       >
-        <Box w={["100%", "100%", "100%", "300px"]} h="100%">
+        <Box
+          w={["100%", "100%", "100%", "300px"]}
+          h="100%"
+          // add a box shadow to the right side if not on mobile
+          shadow={isDesktop ? "0 4px 12px rgba(0,0,0,0.1)" : ""}
+        >
           <LeftNav />
         </Box>
         <MainSection>{children}</MainSection>
-        {isDesktop && <RightNav />}
       </Flex>
-      <Box py="4px" bgColor="black" overflow="hidden">
+      {/* <Box py="4px" bgColor="black" overflow="hidden">
         <Text
           textAlign="center"
           fontFamily="monospace"
@@ -41,7 +45,7 @@ const Layout = ({ children }: ILayoutProps) => {
             the procedure.
           </Link>
         </Text>
-      </Box>
+      </Box> */}
     </>
   );
 };
