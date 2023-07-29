@@ -116,7 +116,7 @@ export default function CrosswordUserPage() {
     return <Heading color="red.700">Something went wrong :(</Heading>;
   if (!userInfo)
     return (
-      <Heading>
+      <Heading minH="100vh">
         Loading... <Spinner />{" "}
       </Heading>
     );
@@ -130,7 +130,7 @@ export default function CrosswordUserPage() {
         />
         <meta property="og:image" content="/crosswordog.png" />
       </Head>
-      <Box mx={[7, 3, 1, 0]}>
+      <Box mx={[7, 3, 1, 0]} minH="100vh">
         <Flex
           w="100%"
           alignItems="center"

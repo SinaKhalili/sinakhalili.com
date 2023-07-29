@@ -80,7 +80,7 @@ export default function Projects() {
         />
         <meta property="og:image" content="/crosswordog.png" />
       </Head>
-      <VStack spacing="20px">
+      <VStack spacing="20px" minH="100vh">
         <Heading>~ Mini Crossword Stats With Friends ~</Heading>
         <Flex>
           <Text>Now we can see how we stack up historically!</Text>

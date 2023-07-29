@@ -190,7 +190,7 @@ export default function Projects() {
   }`;
 
   return (
-    <VStack spacing="20px">
+    <VStack spacing="20px" minH="100vh">
       <Head>
         <title>{title}</title>
         <meta
