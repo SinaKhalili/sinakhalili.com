@@ -6,11 +6,7 @@ interface IMainSectionProps {
 
 export const MainSection = ({ children }: IMainSectionProps) => {
   return (
-    <Box
-      flexGrow={1}
-      mb={["20px", "20px", "20px", "0px"]}
-      // mr={["0px", "0px", "0px", "20px"]}
-    >
+    <Box flexGrow={1} mb={["10px", "10px", "10px", "0px"]}>
       <Flex
         direction="column"
         alignItems="center"

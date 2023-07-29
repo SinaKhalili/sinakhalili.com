@@ -23,12 +23,7 @@ const Layout = ({ children }: ILayoutProps) => {
         h={["auto", "auto", "auto", "100vh"]}
         direction={{ base: "column", lg: "row" }}
       >
-        <Box
-          w={["100%", "100%", "100%", "300px"]}
-          h="100%"
-          // add a box shadow to the right side if not on mobile
-          shadow={isDesktop ? "0 4px 12px rgba(0,0,0,0.1)" : ""}
-        >
+        <Box w={["100%", "100%", "100%", "300px"]} h="100%">
           <LeftNav />
         </Box>
         <MainSection>{children}</MainSection>
