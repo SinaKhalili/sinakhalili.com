@@ -64,10 +64,13 @@ export default function Home({ posts }: HomeProps) {
             </Text>
             <Box>
               <Text>
-                I&apos;m currently working nowhere - I just graduated!
+                I&apos;m currently working on{" "}
+                <Link className="md-link" href="https://onepodshop.com">
+                  onepodshop.com
+                </Link>
                 <PopCitation>
-                  Computer science at Simon Fraser University, incase you were
-                  wondering.
+                  An ecommerce shop that sells individual airpods and airpod
+                  accessories for people who lose their airpods (like me)
                 </PopCitation>
               </Text>
             </Box>
