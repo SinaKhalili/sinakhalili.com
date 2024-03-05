@@ -68,8 +68,9 @@ export default function CrosswordUserPage() {
       setIsError(false);
       const data = json["data"];
       //   sort the data by ["puzzle id"["date"]
+      const processed = data.map((item: any) => item.json_build_object);
 
-      data.sort(
+      processed.sort(
         (
           a: { [x: string]: { [x: string]: number } },
           b: { [x: string]: { [x: string]: number } }
@@ -84,7 +85,8 @@ export default function CrosswordUserPage() {
         }
       );
 
-      setSolveInfo(data);
+      console.log(processed);
+      setSolveInfo(processed);
     };
 
     const getInfo = async () => {

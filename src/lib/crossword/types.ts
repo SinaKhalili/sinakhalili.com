@@ -30,8 +30,6 @@ export type SolveInfo = {
     date: string;
   };
   seconds_spent_solving: number;
-  opened_at: number;
-  board: Board;
 };
 
 export type LeaderboardItem = {

@@ -167,20 +167,10 @@ export const getSolves = async (user_id: string) => {
 };
 
 export const getSolvesFull = async (user_id: string) => {
-  const { data, error } = await supabaseAdmin
-    .from("crosswordsolves")
-    .select(
-      `
-    board,
-    seconds_spent_solving,
-    opened_at,
-    puzzle_id (
-      date
-    )
-    `
-    )
-    .eq("user_id", parseInt(user_id))
-    .eq("is_solved", true);
+  const { data, error } = await supabaseAdmin.rpc("get_some_solves", {
+    user_id,
+    reslimit: 100,
+  });
 
   if (error) {
     throw error;
